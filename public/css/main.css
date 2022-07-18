@@ -51,9 +51,7 @@ body {
     cursor: pointer;
 }
 
-.form button:hover,
-.form button:active,
-.form button:focus {
+.form button:hover, .form button:active, .form button:focus {
     background: #43A047;
 }
 
@@ -68,9 +66,6 @@ body {
     text-decoration: none;
 }
 
-.form .register-form {
-    display: none;
-}
 
 .container {
     position: relative;
@@ -79,8 +74,7 @@ body {
     margin: 0 auto;
 }
 
-.container:before,
-.container:after {
+.container:before, .container:after {
     content: "";
     display: block;
     clear: both;
@@ -113,7 +107,7 @@ body {
     color: #EF3B3A;
 }
 
-.login-body {
+.login-signup-body {
     background: #76b852;
     /* fallback for old browsers */
     background: rgb(141, 194, 111);
