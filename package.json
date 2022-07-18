@@ -1,0 +1,22 @@
+{
+  "name": "sell-easy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://prizzv@github.com/prizzv/Sell-Easy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prizzv/Sell-Easy/issues"
+  },
+  "homepage": "https://github.com/prizzv/Sell-Easy#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
