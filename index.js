@@ -11,3 +11,18 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
+
+app.get('/login', (req, res) =>{
+
+    res.render('login')
+})
+
+app.get('/signup', (req, res) =>{
+
+    res.render('signup')
+})
+
+// To start the server 
+app.listen(3000, () => {
+    console.log("LISTENING ON PORT 3000")
+})
