@@ -2,7 +2,15 @@ const express = require('express');
 const methodOverride = require('method-override')
 const app = express();
 const path = require('path');
-const mysql = require('mysql');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/movieApp')
+    .then(() => {
+        console.log("CONNECTION OPEN");
+    })
+    .catch((err) => {
+        console.log(`error ${err}`);
+    })
 
 
 
@@ -38,14 +46,14 @@ app.get('/signup', (req, res) =>{
 app.post('/users', (req, res) => {
     const {username, email, password} = req.body;
 
-    console.log({username, email, password, id: uuid() });
+    console.log({username, email, password});
     console.log(req.body)
     // res.send("It Workks " + req.body)
     res.redirect('/users');  // This gives a 302 status code 
 })
 app.get('/users',(req, res) => {
 
-    res.send('This users is a get response')
+    res.send('This is users get response')
 })
 
 // To start the server 
