@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const product = new mongoose.Schema({
-    prodName:{
+const productSchema = new mongoose.Schema({
+    name:{
         type:String,
         required:true
     },
@@ -16,9 +16,14 @@ const product = new mongoose.Schema({
         type: Date,
         required: true
     },
-    isOpen: Boolean,
+    isLive: Boolean,
+    isCompleted: Boolean,
     price: {
         type:Number,
         required: true
     }
 })
+
+const Product = mongoose.model('Product', productSchema);
+
+module.exports = Product;

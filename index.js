@@ -4,6 +4,10 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 
+const Product = require('./models/products');
+const User = require('./models/user');
+
+
 mongoose.connect('mongodb://localhost:27017/auctionSystem')
     .then(() => {
         console.log("CONNECTION OPEN");
@@ -12,6 +16,26 @@ mongoose.connect('mongodb://localhost:27017/auctionSystem')
         console.log(`error ${err}`);
     })
 
+// const firstProduct = [  // to check for the database 
+//     {
+//         name: "books",
+//         startDate: new Date(),
+//         endDate: new Date("2022-09-30"),
+//         price: 200
+//     },
+//     {
+//         name: "car",
+//         startDate: new Date(),
+//         endDate: new Date("2022-10-15"),
+//         price: 6900
+//     },
+// ]
+// Product.insertMany(firstProduct)
+//     .then(res => {
+//         console.log(res)
+//     }).catch(e =>{
+//         console.log(e)
+//     })
 
 
 //To parse form data in POST request body:
@@ -25,11 +49,17 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.set('view engine', 'ejs')
 
+/*          Note
+to get the remaining time left in an auction
+use Date().time function which is in milliseconds to the end date
+and then subtract it with the start time to get the remaining time.
+*/
 
-//Home page
-app.get('/', (req, res) => {
-
-    res.render('home')
+//Home page all the products            
+app.get('/', async (req, res) => {
+    const products = await Product.find({})  //find all the products
+    
+    res.render('home', {products})  // sending productInfo
 })
 
 //Login page
