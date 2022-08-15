@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/movieApp')
+mongoose.connect('mongodb://localhost:27017/auctionSystem')
     .then(() => {
         console.log("CONNECTION OPEN");
     })
@@ -26,18 +26,19 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 
+//Home page
 app.get('/', (req, res) => {
 
     res.render('home')
 })
 
-
+//Login page
 app.get('/login', (req, res) =>{
 
     res.render('login')
 })
 
-//Signup 
+//Signup page
 app.get('/signup', (req, res) =>{
 
     res.render('signup')
@@ -55,6 +56,8 @@ app.get('/users',(req, res) => {
 
     res.send('This is users get response')
 })
+
+
 
 // To start the server 
 app.listen(5000, () => {
