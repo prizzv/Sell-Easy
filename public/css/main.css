@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body {
+  background: #2D2A28;
+  color: white;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -113,11 +115,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.live-products-section {
-  color: white;
-  background-color: #4D4F50;
-}
-
 .container2 {
   display: flex;
   justify-content: center;
@@ -125,7 +122,7 @@ body {
   flex-wrap: wrap;
 }
 .container2 .square-blocks {
-  background-color: #05063b;
+  background-color: #9b6060;
   margin: 15px;
 }
 .container2 img {

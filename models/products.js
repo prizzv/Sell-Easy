@@ -5,21 +5,35 @@ const productSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    
+    description: {
+        type: String,
+    },
     image: String,
     
     startDate:{
-        type: Date,
+        type: String,
         required: true
     },
     endDate: {
-        type: Date,
+        type: String,
         required: true
+    },
+    startTime:{
+        type: String,
+        // required: true
+    },
+    endTime:{
+        type: String,
+        // required: true
     },
     isLive: Boolean,
     isCompleted: Boolean,
     price: {
         type:Number,
+        required: true
+    },
+    increment: {
+        type: Number,
         required: true
     }
 })

@@ -10,7 +10,7 @@ const User = require('./models/user');
 
 mongoose.connect('mongodb://localhost:27017/auctionSystem')
     .then(() => {
-        console.log("CONNECTION OPEN");
+        console.log("Mongo CONNECTION OPEN");
     })
     .catch((err) => {
         console.log(`error ${err}`);
@@ -58,6 +58,36 @@ and then subtract it with the start time to get the remaining time.
 //Home page all the products            
 app.get('/', async (req, res) => {
     const products = await Product.find({})  //find all the products
+    let date = new Date().getTime();
+    
+    for(let product of products){
+        let startDate = stringDate(product.startDate, product.startTime);
+        startDate = new Date(startDate).getTime();
+        
+        let endDate = stringDate(product.endDate, product.endTime);
+        endDate = new Date(endDate).getTime();
+        //Check if the product is live, upcomming or previously done
+        if(date < startDate && date < endDate){
+            if(product.isLive == false && product.isCompleted == false){
+                continue;
+            }
+            product.isLive = false;
+            product.isCompleted = false;
+        }else if(date > startDate && date < endDate){
+            if(product.isLive == true && product.isCompleted == false){
+                continue;
+            }
+            product.isLive = true;
+            product.isCompleted = false;
+        }else if(date > startDate && date > endDate){
+            if(product.isLive == false && product.isCompleted == true){
+                continue;
+            }
+            product.isLive = false;
+            product.isCompleted = true;
+        }
+        await product.save();
+    }
     
     res.render('home', {products})  // sending productInfo
 })
@@ -87,6 +117,35 @@ app.get('/users',(req, res) => {
     res.send('This is users get response')
 })
 
+//creating a new product
+app.get('/new', (req, res) => {
+    const date = new Date();
+    const fullDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+    // console.log(fullDate);
+
+
+    res.render('new', {fullDate});
+})
+//getting data from the new product 
+app.post('/', async (req, res) => {  // change / route to someting else
+    console.log(req.body);
+
+    //converting the start Date and time 
+    let startDate = req.body.startDate;
+    startDate = startDate.split("T");
+    req.body.startTime = startDate[1];
+    req.body.startDate = startDate[0];
+    
+    let endDate = req.body.endDate;
+    endDate = endDate.split("T");
+    req.body.endTime = endDate[1];
+    req.body.endDate = endDate[0];
+
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+
+    res.redirect(`/`);
+})
 
 
 // To start the server 
@@ -98,6 +157,13 @@ app.listen(5000, () => {
 app.get('*', (req, res) => {  
     res.send("I dont know that path");
 })
-app.post('*', (req, res) => {  
+app.post('*', (req, res) => {
     res.send("Error in sending data.");
 })
+
+function stringDate(date, time) {
+    let str = date.split("-");
+    str = `${str[1]} ${str[2]}, ${str[0]} ${time}`;
+    
+    return str;
+}

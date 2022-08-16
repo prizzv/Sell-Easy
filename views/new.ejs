@@ -1,0 +1,39 @@
+<%- include('partials/head')%>
+
+    <body>
+        <%- include('partials/navbar') %>
+
+        <form action="/" method="POST">
+            <label for="name">Name of the Product <sup>*</sup></label>
+            <input  type="text" name="name" id="name" placeholder="Product Name">
+
+            <label for="description">Product description <sup>*</sup></label>
+            <textarea  name="description" id="description" cols="30" rows="4"></textarea>
+            
+            <!-- <label for="productImg">Select an image of the product <sup>*</sup></label>
+            <input  type="file" name="productImg" id="productImg"> -->
+            
+            <br>
+            <label for="price">Starting price <sup>*</sup></label>
+            <input type="number" name="price" id="price" placeholder="In Rs" min=100>
+
+            <label for="delivery">Days to deliver<sup>*</sup></label>
+            <input" type="text" name="delivery" id="delivery">
+
+            <label for="increment">Price increment <sup>*</sup></label>
+            <input  type="number" name="increment" id="increment" placeholder="In Rs" min=1>
+            <br>
+            <br>
+            <label for="startDate">Start Date and Time</label>   <%# if not mentioned it will take the current date  %> 
+            <input type="datetime-local" id="startDate" name="startDate" min="2022-01-01">
+
+            <label for="endDate">End Date and Time<sup>*</sup></label>
+            <input  type="datetime-local" id="endDate" name="endDate" min="2022-01-01">
+
+            <br>
+            <button >Create new Auction</button>
+
+        </form>
+    </body>
+
+<%- include('partials/foot')%>

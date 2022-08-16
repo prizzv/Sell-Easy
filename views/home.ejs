@@ -10,7 +10,7 @@
             <div class="container2">
                 
                 <% for(let product of products) { %>
-                    <% if(product.isLive != false && isCompleted == false){ %> 
+                    <% if(product.isLive != false && product.isCompleted == false){ %> 
                         <div class="square-blocks">
                             <img src="/images/test">
                             <h3 class="product-name"><%= product.name %></h3>
@@ -22,16 +22,33 @@
             </div>
         </section>
 
-		<section class="Upcomming-products-section">
+		<section class="upcomming-products-section">
             <h2>Upcomming auction Products</h2>
             
             <div class="container2">
                 <% for(let product of products) { %>
-                    <% if(product.isLive == false && isCompleted == false){ %> 
+                    <% if(product.isLive == false && product.isCompleted == false){ %> 
                         <div class="square-blocks">
                             <img src="/images/test">
                             <h3 class="product-name"><%= product.name %></h3>
                             <p ><%= product.startDate %></p>
+                            <p ><%= product.price %></p>
+                        </div>
+                        <% } %> 
+                <% } %>
+            </div>
+        </section>
+
+		<section class="previous-products-section">
+            <h2>Previous auction Products</h2>
+            
+            <div class="container2">
+                <% for(let product of products) { %>
+                    <% if(product.isLive != false && product.isCompleted != false){ %> 
+                        <div class="square-blocks">
+                            <img src="/images/test">
+                            <h3 class="product-name"><%= product.name %></h3>
+                            <p ><%= product.endDate %></p>
                             <p ><%= product.price %></p>
                         </div>
                         <% } %> 
