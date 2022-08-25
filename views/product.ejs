@@ -21,7 +21,7 @@
                 <p> <%# seller.description %>  </p>  <%# TODO: seller description %> 
             </div>
 
-            <form action="/products/<%= product.id %>  " method="POST">
+            <form action="/products/<%= product.id %>" method="POST">
                 <label for="bid" >Enter the </label>
                 <input type="number" name="bid" id="bid" placeholder="Minimum 100">
                 <button>Place Bid</button>
