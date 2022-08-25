@@ -60,14 +60,15 @@ app.get('/', async (req, res) => {
     const products = await Product.find({})  //find all the products
     let date = new Date().getTime();
     
-    for(let product of products){
+    //Check if the product is live, upcomming or previously done
+    for(let product of products){       //FIXME: This will change only when the user refreshes the webpage and not when the timer completes
         let startDate = stringDate(product.startDate, product.startTime);
         startDate = new Date(startDate).getTime();
         
         let endDate = stringDate(product.endDate, product.endTime);
         endDate = new Date(endDate).getTime();
-        //Check if the product is live, upcomming or previously done
-        if(date < startDate && date < endDate){
+
+        if(date < startDate && date < endDate){ 
             if(product.isLive == false && product.isCompleted == false){
                 continue;
             }
@@ -88,7 +89,7 @@ app.get('/', async (req, res) => {
         }
         await product.save();
     }
-    
+
     res.render('home', {products})  // sending productInfo
 })
 
@@ -107,8 +108,8 @@ app.get('/signup', (req, res) =>{
 app.post('/users', (req, res) => {
     const {username, email, password} = req.body;
 
-    console.log({username, email, password});
-    console.log(req.body)
+    // console.log({username, email, password});
+    // console.log(req.body)
     // res.send("It Workks " + req.body)
     res.redirect('/users');  // This gives a 302 status code 
 })
@@ -128,7 +129,7 @@ app.get('/new', (req, res) => {
 })
 //getting data from the new product 
 app.post('/', async (req, res) => {  // change / route to someting else
-    console.log(req.body);
+    // console.log(req.body);
 
     //converting the start Date and time 
     let startDate = req.body.startDate;
@@ -147,6 +148,24 @@ app.post('/', async (req, res) => {  // change / route to someting else
     res.redirect(`/`);
 })
 
+//getting the product details
+app.get('/products/:id', async (req,res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id)
+    res.render('product', { product })
+})
+
+app.post('/products/:id', async (req,res) => {
+    const { id } = req.params;
+
+    const product = await Product.findById(id);
+    
+    product.price += parseInt(req.body.bid)
+    // console.log(product.price)
+    
+    await product.save();
+    res.render('product', { product })
+})
 
 // To start the server 
 app.listen(5000, () => {

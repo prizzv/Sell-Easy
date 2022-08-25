@@ -16,12 +16,15 @@
             <br>
             <label for="price">Starting price <sup>*</sup></label>
             <input type="number" name="price" id="price" placeholder="In Rs" min=100>
-
-            <label for="delivery">Days to deliver<sup>*</sup></label>
-            <input" type="text" name="delivery" id="delivery">
+            
+            <label for="shipping">Shipping Charges <sup>*</sup></label>
+            <input type="number" name="shipping" id="shipping" placeholder="In Rs" min=0>
 
             <label for="increment">Price increment <sup>*</sup></label>
             <input  type="number" name="increment" id="increment" placeholder="In Rs" min=1>
+
+            <label for="deliver">Delivery days details<sup>*</sup></label>
+            <input type="text" name="deliver" id="deliver" placeholder="Days to deliver">
             <br>
             <br>
             <label for="startDate">Start Date and Time</label>   <%# if not mentioned it will take the current date  %> 

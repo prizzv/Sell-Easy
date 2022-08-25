@@ -12,8 +12,8 @@
                 <% for(let product of products) { %>
                     <% if(product.isLive != false && product.isCompleted == false){ %> 
                         <div class="square-blocks">
-                            <img src="/images/test">
-                            <h3 class="product-name"><%= product.name %></h3>
+                            <a href="/products/<%= product._id %>"><img src="/images/test"></a>
+                            <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
                             <p ><%= product.endDate %></p>
                             <p ><%= product.price %></p>
                         </div>
@@ -29,12 +29,12 @@
                 <% for(let product of products) { %>
                     <% if(product.isLive == false && product.isCompleted == false){ %> 
                         <div class="square-blocks">
-                            <img src="/images/test">
-                            <h3 class="product-name"><%= product.name %></h3>
+                            <a href="/products/<%= product._id %>"><img src="/images/test"></a>
+                            <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
                             <p ><%= product.startDate %></p>
                             <p ><%= product.price %></p>
                         </div>
-                        <% } %> 
+                    <% } %> 
                 <% } %>
             </div>
         </section>
@@ -44,20 +44,20 @@
             
             <div class="container2">
                 <% for(let product of products) { %>
-                    <% if(product.isLive != false && product.isCompleted != false){ %> 
+                    <% if(product.isLive == false && product.isCompleted != false){ %> 
                         <div class="square-blocks">
-                            <img src="/images/test">
-                            <h3 class="product-name"><%= product.name %></h3>
+                            <a href="/products/<%= product._id %>"><img src="/images/test"></a>
+                            <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
                             <p ><%= product.endDate %></p>
                             <p ><%= product.price %></p>
                         </div>
-                        <% } %> 
+                    <% } %> 
                 <% } %>
             </div>
         </section>
 
-
-
+        
+        
 	</body>
 
 <%- include('partials/foot')%>

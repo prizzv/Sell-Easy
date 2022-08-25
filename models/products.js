@@ -35,6 +35,9 @@ const productSchema = new mongoose.Schema({
     increment: {
         type: Number,
         required: true
+    },
+    shipping:{
+        type: Number
     }
 })
 

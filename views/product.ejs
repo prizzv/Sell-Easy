@@ -1,0 +1,35 @@
+<%- include('partials/head')%>
+
+    <body>
+        <%- include('partials/navbar') %>
+        
+        <section>
+            <h3> <%= product.name %> </h3>
+            <h3>Current price: <%= product.price %> </h3>
+            <h3>Time remaining to end <%= product.endTime %>  </h3>
+            <p>startDate: <%= product.startDate %> </p>
+            <p>endDate: <%= product.endDate %> </p>
+
+        </section>
+
+        <section>
+            <!-- <img src="" alt="">  <%# TODO: show product image on left side %>  -->
+            <div>
+                <h2>Product Description</h2>
+                <p> <%= product.description %>  </p>
+                <h2>Seller Description</h2>
+                <p> <%# seller.description %>  </p>  <%# TODO: seller description %> 
+            </div>
+
+            <form action="/products/<%= product.id %>  " method="POST">
+                <label for="bid" >Enter the </label>
+                <input type="number" name="bid" id="bid" placeholder="Minimum 100">
+                <button>Place Bid</button>
+            </form>
+
+        </section>
+
+
+    </body>
+
+<%- include('partials/foot')%>
