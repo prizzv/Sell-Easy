@@ -2,6 +2,8 @@ const express = require('express');
 const methodOverride = require('method-override')
 const app = express();
 const path = require('path');
+const Joi = require('joi');     // DONE: Do the Joi checking 
+
 //Database imports
 const mongoose = require('mongoose');
 const Product = require('./models/products');
@@ -9,7 +11,7 @@ const User = require('./models/user');
 
 const wrapAsync = require('./utils/wrapAsync');
 const ExpressError = require('./utils/ExpressError');
-
+const { productSchema } = require('./schemas.js');
 
 mongoose.connect('mongodb://localhost:27017/auctionSystem')
     .then(() => {
@@ -52,13 +54,23 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.set('view engine', 'ejs')
 
-/*          Note
+/*          Note        DONE:
 to get the remaining time left in an auction
 use Date().time function which is in milliseconds to the end date
 and then subtract it with the start time to get the remaining time.
 */
 
-//Home page all the products            
+const validateProduct = (req, res, next) => {
+    const { error } = productSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    }else {
+        next();
+    }
+}
+
+//Home page all the products  
 app.get('/', wrapAsync(async (req, res) => {
     const products = await Product.find({})  //find all the products
     let date = new Date().getTime();
@@ -130,12 +142,8 @@ app.get('/new', (req, res) => {
     res.render('new', { fullDate });
 })
 //Getting data from the new product 
-app.post('/', wrapAsync(async (req, res) => {  // TODO: Change / route to someting else
-    // console.log(req.body);
+app.post('/',validateProduct, wrapAsync(async (req, res) => {  // TODO: Change / route to someting else
 
-    if(!req.body.product.name){
-        throw new ExpressError('Invalid Product Data', 400);  //FIXME: not working.
-    }
     const {product} = req.body;     //getting the product details from the body 
 
     //converting the start Date and time 
@@ -166,6 +174,10 @@ app.post('/products/:id', wrapAsync(async (req, res) => {       //TODO: Check if
     const { id } = req.params;
 
     const product = await Product.findById(id);
+
+    if(req.body.bid < product.increment){  // increment price should not be less than minimum increment
+        throw new ExpressError("Ammount too low", 406);  // not acceptable  
+    }
 
     product.price += parseInt(req.body.bid)
     // console.log(product.price)
