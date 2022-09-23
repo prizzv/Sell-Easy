@@ -21,28 +21,6 @@ mongoose.connect('mongodb://localhost:27017/auctionSystem')
         console.log(`error ${err}`);
     })
 
-// const firstProduct = [  // to check for the database 
-//     {
-//         name: "books",
-//         startDate: new Date(),
-//         endDate: new Date("2022-09-30"),
-//         price: 200
-//     },
-//     {
-//         name: "car",
-//         startDate: new Date(),
-//         endDate: new Date("2022-10-15"),
-//         price: 6900
-//     },
-// ]
-// Product.insertMany(firstProduct)
-//     .then(res => {
-//         console.log(res)
-//     }).catch(e =>{
-//         console.log(e)
-//     })
-
-
 //To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }))
 

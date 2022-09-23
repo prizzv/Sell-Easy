@@ -6,7 +6,7 @@
         <section>
             <h3> <%= product.name %> </h3>
             <h3>Current price: <%= product.price %> </h3>
-            <h3>Time remaining to end <%= product.endTime %>  </h3>
+            <h3><span id="startEndTimerH3"></span> <span class="remainingTime" id="remainingTime"></span></h3>
             <p>startDate: <%= product.startDate %> </p>
             <p>endDate: <%= product.endDate %> </p>
 
@@ -22,14 +22,64 @@
             </div>
 
             <form action="/products/<%= product.id %>" method="POST">
-                <label for="bid" >Enter the </label>
+                <label for="bid" >Enter bid ammount </label>
                 <input type="number" name="bid" id="bid" placeholder="Minimum <%= product.increment %> ">
-                <button>Place Bid</button>
+                <button id = "placeBidBtn">Place Bid</button>
             </form>
 
         </section>
 
+        <script>
+            // Set the date we're counting down to
+            const endDate = new Date("<%= product.endDate%> <%= product.endTime%>" ).getTime();
+            const startDate = new Date("<%= product.startDate %> <%= product.startTime %>").getTime();
+            // Get today's date and time
+            let now = new Date().getTime();
 
+            function getTimer(date){
+
+                // Update the count down every 1 second
+                var x = setInterval(function() {
+                    now = new Date().getTime();     // This has to be here to calculate the difference btw the present time and the end date
+
+                    // Find the distance between now and the count down date
+                    var distance = date - now;
+                    
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    // Display the result in the element with id="remainingTime"
+                    document.getElementById("remainingTime").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                    
+                    // The count down is finished
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("remainingTime").innerHTML = "EXPIRED";
+                        document.getElementById("placeBidBtn").disabled = true;
+                    }
+
+                }, 1000);
+            }
+
+            if(startDate < now && endDate > now){  //Check if the date is in between the current time 
+                document.getElementById("startEndTimerH3").innerHTML = "Time remaining to end: ";
+                getTimer(endDate);
+
+            }else if(startDate > now && endDate > now){     // Upcomming product
+                //TODO: get the timer to work again without repeating the code
+                document.getElementById("startEndTimerH3").innerHTML = "Time remaining to start: ";
+                getTimer(startDate);
+                document.getElementById("bid").disabled = true;
+                document.getElementById("placeBidBtn").disabled = true;
+            }else{   // Old/Previous product
+                document.getElementById("remainingTime").innerHTML = "Auction EXPIRED";
+                document.getElementById("bid").disabled = true;
+                document.getElementById("placeBidBtn").disabled = true;
+            }
+        </script>
     </body>
 
 <%- include('partials/foot')%>
