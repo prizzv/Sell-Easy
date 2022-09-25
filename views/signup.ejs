@@ -1,21 +1,120 @@
 <%- include('partials/head')%>
 
 
-    <body  class="login-signup-body">
-        <%- include('partials/navbar') %>
-		
-        <div class="login-page">
-            <div class="form">
-                <form class="register-form" action="/users" method="post" >
-                    <input id="username" name="username" type="text" placeholder="Name" />
-                    <input id="email" name="email" type="email" placeholder="Email address" />
-                    <input id="password" name="password" type="password" placeholder="Password" />
-                    <button>create</button>
-                    <p class="message">Already registered? <a href="/login">Sign In</a></p>
-                </form>
-                
+<body class="login-signup-body">
+    <%- include('partials/navbar') %>
+
+    <div class="col-8 offset-2">
+        <form class="register-form row g-3 needs-validation" action="/user" method="post" novalidate>
+            <div class="col-md-3 mt-2">
+                <label for="firstName" class="form-label">First name</label>
+                <input type="text" name="user[firstName]" class="form-control" id="firstName" <%# required %> > 
             </div>
-        </div>
-	</body>
+            <div class="col-md-3 mt-2">
+                <label for="lastName" class="form-label">Last name</label>
+                <input type="text" name="user[lastName]" class="form-control" id="lastName" <%# required %> > 
+            </div>
+            <div class="col-md-4 mt-2">
+                <label for="validationCustomEmail" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="email" name="user[email]" class="form-control" id="validationCustomEmail"
+                        aria-describedby="inputGroupPrepend" <%# required %> > 
+                    <div class="invalid-feedback">Please choose a valid Email address.</div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 mt-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="user[password]" class="form-control" id="password" <%# required %> > 
+                <div class="invalid-feedback">Please enter a proper password.</div>
+            </div>
+            <div class="col-md-3 mt-3">
+                <label for="password2" class="form-label">Re-enter Password</label>
+                <input type="password" name="user[password2]" class="form-control" id="password2" <%# required %> > 
+                <div class="invalid-feedback">Re-enter same password.</div>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="form">Gender</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="genderMale" name="user[gender]" <%# required %> > 
+                    <label class="form-check-label" for="genderMale">Male</label>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="radio" class="form-check-input" id="genderFemale" name="user[gender]" <%# required %> > 
+                    <label class="form-check-label" for="genderFemale">Female</label>
+                    <div class="invalid-feedback">Enter a gender</div>
+                </div>
+            </div>
+            <div class="col-md-3 mt-3">
+                <label for="age">Date of birth</label>
+                <input type="date" class="userAge" name="user[age]" <%# required %> > 
+                <div class="invalid-feedback">Enter your date of birth</div>
+            </div>
+            
+
+            <div class="col-md-2">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="addresses[city]" <%# required %> > 
+                <div class="invalid-feedback">Please provide a valid city.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="street" class="form-label">Street</label>
+                <input type="text" class="form-control" id="street" name="addresses[street]" <%# required %> > 
+                <div class="invalid-feedback">Please provide a valid street.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" id="state" name="addresses[state]" <%# required %> > 
+                <div class="invalid-feedback">Please provide a valid State.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" name="addresses[country]" <%# required %> > 
+                <div class="invalid-feedback">Please provide a valid country.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="landmark" class="form-label">Landmark</label>
+                <input type="text" class="form-control" id="landmark" name="addresses[landmark]" >
+            </div>
+            <div class="col-md-3 mt-2">
+                <label for="zipcode" class="form-label">Zip Code</label>
+                <input type="number" class="form-control" id="zipcode" name="addresses[zipcode]" min = "100000" max="999999" <%# required %> > 
+                <div class="invalid-feedback">Please provide a valid zipcode.</div>
+            </div>
+            <div class="col-md-3 mt-2">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="number" class="form-control" id="phoneNumber" name="user[phoneNumber]" min="1000000000" max="9999999999" <%# required %> > 
+                <div class="invalid-feedback">Please provide a valid phone number.</div>
+            </div>
+            
+            <div class="col-12 mt-3">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+</body>
 
 <%- include('partials/foot')%>
