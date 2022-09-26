@@ -5,14 +5,18 @@
     <%- include('partials/navbar') %>
 
     <div class="col-8 offset-2">
-        <form class="register-form row g-3 needs-validation" action="/user" method="post" novalidate>
-            <div class="col-md-3 mt-2">
+        <form class="register-form row g-3 needs-validation" action="/signup" method="post" novalidate>
+            <div class="col-md-2 mt-2">
                 <label for="firstName" class="form-label">First name</label>
                 <input type="text" name="user[firstName]" class="form-control" id="firstName" <%# required %> > 
             </div>
-            <div class="col-md-3 mt-2">
+            <div class="col-md-2 mt-2">
                 <label for="lastName" class="form-label">Last name</label>
                 <input type="text" name="user[lastName]" class="form-control" id="lastName" <%# required %> > 
+            </div>
+            <div class="col-md-3 mt-2">
+                <label for="username" class="form-label">Enter a username</label>
+                <input type="text" name="user[username]" class="form-control" id="username" <%# required %> > 
             </div>
             <div class="col-md-4 mt-2">
                 <label for="validationCustomEmail" class="form-label">Email</label>
@@ -38,22 +42,23 @@
             <div class="col-md-2 mt-3">
                 <label for="form">Gender</label>
                 <div class="form-check">
-                    <input type="radio" class="form-check-input" id="genderMale" name="user[gender]" <%# required %> > 
+                    <input type="radio" class="form-check-input" id="genderMale" name="user[gender]" value="M" <%# required %> > 
                     <label class="form-check-label" for="genderMale">Male</label>
                 </div>
                 <div class="form-check mb-3">
-                    <input type="radio" class="form-check-input" id="genderFemale" name="user[gender]" <%# required %> > 
+                    <input type="radio" class="form-check-input" id="genderFemale" name="user[gender]" value="F"<%# required %> > 
                     <label class="form-check-label" for="genderFemale">Female</label>
                     <div class="invalid-feedback">Enter a gender</div>
                 </div>
             </div>
+
             <div class="col-md-3 mt-3">
-                <label for="age">Date of birth</label>
-                <input type="date" class="userAge" name="user[age]" <%# required %> > 
+                <label for="birthDate">Date of birth</label>
+                <input type="date" class="birthDate" max="<%= new Date().toISOString().slice(0,10)%>" name="user[birthDate]" <%# required %> > 
                 <div class="invalid-feedback">Enter your date of birth</div>
             </div>
             
-
+            
             <div class="col-md-2">
                 <label for="city" class="form-label">City</label>
                 <input type="text" class="form-control" id="city" name="addresses[city]" <%# required %> > 
@@ -79,13 +84,13 @@
                 <input type="text" class="form-control" id="landmark" name="addresses[landmark]" >
             </div>
             <div class="col-md-3 mt-2">
-                <label for="zipcode" class="form-label">Zip Code</label>
-                <input type="number" class="form-control" id="zipcode" name="addresses[zipcode]" min = "100000" max="999999" <%# required %> > 
+                <label for="zipCode" class="form-label">Zip Code</label>
+                <input type="number" class="form-control" id="zipCode" name="addresses[zipCode]" min = "100000" max="999999" <%# required %> > 
                 <div class="invalid-feedback">Please provide a valid zipcode.</div>
             </div>
             <div class="col-md-3 mt-2">
-                <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input type="number" class="form-control" id="phoneNumber" name="user[phoneNumber]" min="1000000000" max="9999999999" <%# required %> > 
+                <label for="phoneNo" class="form-label">Phone Number</label>
+                <input type="number" class="form-control" id="phoneNo" name="user[phoneNo]" min="1000000000" max="9999999999" <%# required %> > 
                 <div class="invalid-feedback">Please provide a valid phone number.</div>
             </div>
             

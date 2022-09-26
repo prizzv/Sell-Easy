@@ -3,6 +3,7 @@ const methodOverride = require('method-override')
 const app = express();
 const path = require('path');
 const Joi = require('joi');     // DONE: Do the Joi checking 
+const bcrypt = require('bcrypt');
 
 //Database imports
 const mongoose = require('mongoose');
@@ -11,7 +12,7 @@ const User = require('./models/user');
 
 const wrapAsync = require('./utils/wrapAsync');
 const ExpressError = require('./utils/ExpressError');
-const { productSchema } = require('./schemas.js');
+const { productSchema, userSchema } = require('./schemas.js');
 
 mongoose.connect('mongodb://localhost:27017/auctionSystem')
     .then(() => {
@@ -38,8 +39,18 @@ use Date().time function which is in milliseconds to the end date
 and then subtract it with the start time to get the remaining time.
 */
 
-const validateProduct = (req, res, next) => {
+const validateProduct = (req, res, next) => {       //product schema validation check
     const { error } = productSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    }else {
+        next();
+    }
+}
+
+const validateUser = (req, res, next) => {      //user schema validation check
+    const { error } = userSchema.validate(req.body);
     if(error){
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
@@ -98,12 +109,26 @@ app.get('/signup', (req, res) => {
     res.render('signup')
 })
 
-app.post('/users', wrapAsync((req, res, next) => {
-    const { username, email, password } = req.body;
+app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
+    const { user, addresses } = req.body;
+    
+    const hash = await bcrypt.hash(user.password, 14);
+    user.password = hash;
+    user.addresses = addresses;
+    const now = new Date();
+    let age = new Date(user.birthDate).getFullYear();
+    
+    user.age = now.getFullYear() - age;
+    user.firstLoginDate = now;
+    user.lastLoginDate = now;
+    user.name = user.firstName +" "+ user.lastName;
+    
+    const newUser = new User(user);
+    await newUser.save();
+    
+    console.log(newUser);
 
-    // console.log({username, email, password});
-    // console.log(req.body)
-    // res.send("It Workks " + req.body)
+
     res.redirect('/users');  // This gives a 302 status code 
 }))
 app.get('/users', (req, res) => {
@@ -120,7 +145,7 @@ app.get('/new', (req, res) => {
     res.render('new', { fullDate });
 })
 //Getting data from the new product 
-app.post('/',validateProduct, wrapAsync(async (req, res) => {  // TODO: Change / route to someting else
+app.post('/product',validateProduct, wrapAsync(async (req, res) => {  // TODO: Change / route to someting else
 
     const {product} = req.body;     //getting the product details from the body 
 
