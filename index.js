@@ -117,27 +117,19 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 app.post('/login', wrapAsync(async (req, res, next)=> { 
-    const {email, password } =  req.body;
-    
-    try {
-        const user = await User.findOne( {email} );
-        const validPassword = await bcrypt.compare(password, user.password);
+    const { email, password } =  req.body;
+    const foundUser = await User.findAndValidate(email, password);  // Done in user model 
 
-        if(!validPassword){
-            throw new error;
-        }
-        
-        req.session.user_id = user._id;
-        res.redirect('/home');    // going to home page
-      
-    } catch (errror) {
+    if(foundUser){
+        req.session.user_id = foundUser._id;
+        res.redirect('/home');    // going to home page 
+    }else{
         res.send("Invalid Username or Password")
     }
-    
 
 }))
 app.post('/logout', (req, res) => {         // TODO: use this somewhere on user details page 
-    // req.session.user_id = null;          // I can just remove the user_id but the bellow method is better 
+    // req.session.user_id = null;          // I can just remove the user_id but the below method is better 
     req.session.destroy();
     res.redirect('/home');
 })

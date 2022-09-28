@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt')
+
 const { Schema } = mongoose;
 
 const userSchema = new mongoose.Schema({
@@ -75,6 +77,23 @@ const userSchema = new mongoose.Schema({
     ]
 
 })
+
+userSchema.statics.findAndValidate = async function (email, password) {
+
+    try {
+        const foundUser = await this.findOne({email})
+        const isValid = await bcrypt.compare(password, foundUser.password)
+
+        if(!isValid){
+            throw new error;
+        }
+        return foundUser;
+
+    } catch (errror) {
+        return false;
+    }
+}
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
