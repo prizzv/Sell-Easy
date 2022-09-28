@@ -7,10 +7,10 @@
             <div class="login-page">
                 <div class="form">
                     
-                    <form class="login-form" action="/users" method="get">
-                        <input id="email" type="email" placeholder="Email" />
-                        <input id="password" type="password" placeholder="Password"/>
-                        <button>login</button>
+                    <form class="login-form" action="/login" method="POST">
+                        <input id="email" type="email" name="email" placeholder="Email" />
+                        <input id="password" type="password" name="password" placeholder="Password"/>
+                        <button  type="submit">login</button>
                         <p class="message">Not registered? <a href="/signup">Create an account</a></p>
                     </form>
                 </div>

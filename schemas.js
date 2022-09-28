@@ -19,7 +19,7 @@ module.exports.userSchema = Joi.object({
         lastName: Joi.string().required(),
         username: Joi.string().required(),
         email: Joi.string().required(),
-        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{7,30}$')).required(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{1,30}$')).required(),
         password2: Joi.string(),
         gender: Joi.string().required(),    // TODO: use enum here to check 
         birthDate: Joi.string().required(),

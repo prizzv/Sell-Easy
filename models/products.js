@@ -49,6 +49,10 @@ const productSchema = new mongoose.Schema({
     seller: {
         type: Schema.Types.ObjectId,
         ref: 'Users'
+    },
+    lastBid: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users'
     }
 })
 

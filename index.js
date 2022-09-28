@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const Joi = require('joi');     // DONE: Do the Joi checking 
 const bcrypt = require('bcrypt');
+const session = require('express-session')
 
 //Database imports
 const mongoose = require('mongoose');
@@ -30,6 +31,12 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(methodOverride('_method'))
 app.set('views', path.join(__dirname, 'views'))
+
+app.use(session({
+    secret: 'notagoodsecret',
+    resave: false,
+    saveUninitialized: true
+}))
 
 app.set('view engine', 'ejs')
 
@@ -59,8 +66,15 @@ const validateUser = (req, res, next) => {      //user schema validation check
     }
 }
 
+const requireLogin = (req, res, next) => {
+    if(!req.session.user_id){
+        return res.redirect('/login')
+    }
+    next();
+}
+
 //Home page all the products  
-app.get('/', wrapAsync(async (req, res) => {
+app.get(['/', '/home'], wrapAsync(async (req, res) => {
     const products = await Product.find({})  //find all the products
     let date = new Date().getTime();
 
@@ -102,7 +116,31 @@ app.get('/login', (req, res) => {
 
     res.render('login')
 })
+app.post('/login', wrapAsync(async (req, res, next)=> { 
+    const {email, password } =  req.body;
+    
+    try {
+        const user = await User.findOne( {email} );
+        const validPassword = await bcrypt.compare(password, user.password);
 
+        if(!validPassword){
+            throw new error;
+        }
+        
+        req.session.user_id = user._id;
+        res.redirect('/home');    // going to home page
+      
+    } catch (errror) {
+        res.send("Invalid Username or Password")
+    }
+    
+
+}))
+app.post('/logout', (req, res) => {         // TODO: use this somewhere on user details page 
+    // req.session.user_id = null;          // I can just remove the user_id but the bellow method is better 
+    req.session.destroy();
+    res.redirect('/home');
+})
 //Signup page
 app.get('/signup', (req, res) => {
 
@@ -126,10 +164,10 @@ app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
     const newUser = new User(user);
     await newUser.save();
     
-    console.log(newUser);
-
-
-    res.redirect('/users');  // This gives a 302 status code 
+    // DONE: use cookies to store user data
+    req.session.user_id = newUser._id;
+    
+    res.redirect('home');  // This gives a 302 status code 
 }))
 app.get('/users', (req, res) => {
 
@@ -138,14 +176,11 @@ app.get('/users', (req, res) => {
 
 //Creating a new product
 app.get('/new', (req, res) => {
-    const date = new Date();
-    const fullDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    // console.log(fullDate);
 
-    res.render('new', { fullDate });
+    res.render('new');
 })
 //Getting data from the new product 
-app.post('/product',validateProduct, wrapAsync(async (req, res) => {  // TODO: Change / route to someting else
+app.post('/product',validateProduct, wrapAsync(async (req, res) => {  // DONE: Change / route to someting else. Post of a new product
 
     const {product} = req.body;     //getting the product details from the body 
 
@@ -173,10 +208,12 @@ app.get('/products/:id', wrapAsync(async (req, res) => {
     res.render('product', { product })
 }))
 //Adding the value to product 
-app.post('/products/:id', wrapAsync(async (req, res) => {       //TODO: Check if I can use simple javascript to submit the form without going to post and reloading 
+app.post('/products/:id', requireLogin, wrapAsync(async (req, res, next) => {       //TODO: Check if I can use simple javascript to submit the form without going to post and reloading 
     const { id } = req.params;
 
     const product = await Product.findById(id);
+
+    product.lastBid = req.session.user_id;   // Adds the current userID to the products lastBid 
 
     if(req.body.bid < product.increment){  // increment price should not be less than minimum increment
         throw new ExpressError("Ammount too low", 406);  // not acceptable  
@@ -188,6 +225,19 @@ app.post('/products/:id', wrapAsync(async (req, res) => {       //TODO: Check if
     await product.save();
     res.render('product', { product })
 }))
+
+// How the system works page 
+app.get('/how_it_works', (req, res) => {
+
+    res.render('how_it_works')
+})
+
+app.get('/secret', (req, res) =>{       // FIXME: Useless delete later 
+    if(!req.session.user_id){
+        return res.redirect('/login')
+    }
+    res.send("HUSHHHHHHHHHHHHHH");
+})
 
 // To start the server 
 app.listen(5000, () => {
