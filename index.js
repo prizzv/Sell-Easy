@@ -5,6 +5,7 @@ const path = require('path');
 const Joi = require('joi');     // DONE: Do the Joi checking 
 const bcrypt = require('bcrypt');
 const session = require('express-session')
+const cookieParser = require('cookie-parser');
 
 //Database imports
 const mongoose = require('mongoose');
@@ -38,6 +39,8 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.use(cookieParser('asecret'))        // to use signing we use the secret inside the cookieParser
+
 app.set('view engine', 'ejs')
 
 /*          Note        DONE:
@@ -68,13 +71,35 @@ const validateUser = (req, res, next) => {      //user schema validation check
 
 const requireLogin = (req, res, next) => {
     if(!req.session.user_id){
+        res.cookie('isLoggedin', 'false');
         return res.redirect('/login')
     }
+
+    res.cookie('isLoggedin', 'true');
+    next();
+}
+const isSellerLogin = (req, res, next) => {
+    if(!req.session.isSeller){
+        res.cookie('isSeller', 'false');
+    }else{
+        res.cookie('isSeller', 'true');
+    }
+
+    next();
+}
+
+const isLoggedin = (req, res, next) => {
+    if(!req.session.user_id){
+        res.cookie('isLoggedin', 'false');
+    }else{
+        res.cookie('isLoggedin', 'true');
+    }
+
     next();
 }
 
 //Home page all the products  
-app.get(['/', '/home'], wrapAsync(async (req, res) => {
+app.get(['/', '/home'], isLoggedin, wrapAsync(async (req, res) => {
     const products = await Product.find({})  //find all the products
     let date = new Date().getTime();
 
@@ -87,7 +112,7 @@ app.get(['/', '/home'], wrapAsync(async (req, res) => {
         endDate = new Date(endDate).getTime();
 
         if (date < startDate && date < endDate) {
-            if (product.isLive == false && product.isCompleted == false) {
+            if (product.isLive == false && product.isCompleted == false) {      //If already all correct then continue else correct them 
                 continue;
             }
             product.isLive = false;
@@ -102,10 +127,15 @@ app.get(['/', '/home'], wrapAsync(async (req, res) => {
             if (product.isLive == false && product.isCompleted == true) {
                 continue;
             }
+            if(product.lastBid){        // if someone has bid on the product last time only then do following
+                const user = await User.findById(product.lastBid);    //find the user and update the user with the product since he has won the product 
+                user.productsBought = product;
+                await user.save();
+            }
             product.isLive = false;
             product.isCompleted = true;
         }
-        await product.save();
+        await product.save();   // this will run only if all the above continue conditions fails
     }
 
     res.render('home', { products })  // sending productInfo
@@ -122,6 +152,11 @@ app.post('/login', wrapAsync(async (req, res, next)=> {
 
     if(foundUser){
         req.session.user_id = foundUser._id;
+        res.cookie('isLoggedin', 'true');
+
+        req.session.isSeller = foundUser.isSeller;
+        res.cookie('isSeller', foundUser.isSeller);
+        
         res.redirect('/home');    // going to home page 
     }else{
         res.send("Invalid Username or Password")
@@ -152,13 +187,15 @@ app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
     user.firstLoginDate = now;
     user.lastLoginDate = now;
     user.name = user.firstName +" "+ user.lastName;
-    
+    user.isSeller = false;
+
     const newUser = new User(user);
     await newUser.save();
     
     // DONE: use cookies to store user data
     req.session.user_id = newUser._id;
-    
+    req.session.isSeller = newUser.isSeller;
+
     res.redirect('home');  // This gives a 302 status code 
 }))
 app.get('/users', (req, res) => {
@@ -167,7 +204,7 @@ app.get('/users', (req, res) => {
 })
 
 //Creating a new product
-app.get('/new', (req, res) => {
+app.get('/new', isSellerLogin, (req, res) => {
 
     res.render('new');
 })
@@ -223,6 +260,13 @@ app.get('/how_it_works', (req, res) => {
 
     res.render('how_it_works')
 })
+
+//User details page
+app.get('/userDetails', requireLogin, isSellerLogin, wrapAsync(async( req, res, next) =>{
+    // const {id} = req.params;
+    // const user = await User.findById(id);
+    res.render('userDetails')
+}))
 
 app.get('/secret', (req, res) =>{       // FIXME: Useless delete later 
     if(!req.session.user_id){
