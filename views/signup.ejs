@@ -8,22 +8,22 @@
         <form class="register-form row g-3 needs-validation" action="/signup" method="post" novalidate>
             <div class="col-md-2 mt-2">
                 <label for="firstName" class="form-label">First name</label>
-                <input type="text" name="user[firstName]" class="form-control" id="firstName" <%# required %> > 
+                <input type="text" name="user[firstName]" class="form-control" id="firstName" required> 
             </div>
             <div class="col-md-2 mt-2">
                 <label for="lastName" class="form-label">Last name</label>
-                <input type="text" name="user[lastName]" class="form-control" id="lastName" <%# required %> > 
+                <input type="text" name="user[lastName]" class="form-control" id="lastName" required> 
             </div>
             <div class="col-md-3 mt-2">
                 <label for="username" class="form-label">Enter a username</label>
-                <input type="text" name="user[username]" class="form-control" id="username" <%# required %> > 
+                <input type="text" name="user[username]" class="form-control" id="username" required> 
             </div>
             <div class="col-md-4 mt-2">
                 <label for="validationCustomEmail" class="form-label">Email</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
                     <input type="email" name="user[email]" class="form-control" id="validationCustomEmail"
-                        aria-describedby="inputGroupPrepend" <%# required %> > 
+                        aria-describedby="inputGroupPrepend" required> 
                     <div class="invalid-feedback">Please choose a valid Email address.</div>
                 </div>
             </div>
@@ -31,22 +31,22 @@
 
             <div class="col-md-3 mt-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="user[password]" class="form-control" id="password" <%# required %> > 
+                <input type="password" name="user[password]" class="form-control" id="password" required> 
                 <div class="invalid-feedback">Please enter a proper password.</div>
             </div>
             <div class="col-md-3 mt-3">
                 <label for="password2" class="form-label">Re-enter Password</label>
-                <input type="password" name="user[password2]" class="form-control" id="password2" <%# required %> > 
+                <input type="password" name="user[password2]" class="form-control" id="password2" required> 
                 <div class="invalid-feedback">Re-enter same password.</div>
             </div>
             <div class="col-md-2 mt-3">
                 <label for="form">Gender</label>
                 <div class="form-check">
-                    <input type="radio" class="form-check-input" id="genderMale" name="user[gender]" value="M" <%# required %> > 
+                    <input type="radio" class="form-check-input" id="genderMale" name="user[gender]" value="M" required> 
                     <label class="form-check-label" for="genderMale">Male</label>
                 </div>
                 <div class="form-check mb-3">
-                    <input type="radio" class="form-check-input" id="genderFemale" name="user[gender]" value="F"<%# required %> > 
+                    <input type="radio" class="form-check-input" id="genderFemale" name="user[gender]" value="F" required>
                     <label class="form-check-label" for="genderFemale">Female</label>
                     <div class="invalid-feedback">Enter a gender</div>
                 </div>
@@ -54,29 +54,29 @@
 
             <div class="col-md-3 mt-3">
                 <label for="birthDate">Date of birth</label>
-                <input type="date" class="birthDate" max="<%= new Date().toISOString().slice(0,10)%>" name="user[birthDate]" <%# required %> > 
+                <input type="date" class="birthDate" max="<%= new Date().toISOString().slice(0,10)%>" name="user[birthDate]" required> 
                 <div class="invalid-feedback">Enter your date of birth</div>
             </div>
             
             
             <div class="col-md-2">
                 <label for="city" class="form-label">City</label>
-                <input type="text" class="form-control" id="city" name="addresses[city]" <%# required %> > 
+                <input type="text" class="form-control" id="city" name="addresses[city]" required> 
                 <div class="invalid-feedback">Please provide a valid city.</div>
             </div>
             <div class="col-md-2">
                 <label for="street" class="form-label">Street</label>
-                <input type="text" class="form-control" id="street" name="addresses[street]" <%# required %> > 
+                <input type="text" class="form-control" id="street" name="addresses[street]" required> 
                 <div class="invalid-feedback">Please provide a valid street.</div>
             </div>
             <div class="col-md-2">
                 <label for="state" class="form-label">State</label>
-                <input type="text" class="form-control" id="state" name="addresses[state]" <%# required %> > 
+                <input type="text" class="form-control" id="state" name="addresses[state]" required> 
                 <div class="invalid-feedback">Please provide a valid State.</div>
             </div>
             <div class="col-md-2">
                 <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="country" name="addresses[country]" <%# required %> > 
+                <input type="text" class="form-control" id="country" name="addresses[country]" required> 
                 <div class="invalid-feedback">Please provide a valid country.</div>
             </div>
             <div class="col-md-2">
@@ -85,12 +85,12 @@
             </div>
             <div class="col-md-3 mt-2">
                 <label for="zipCode" class="form-label">Zip Code</label>
-                <input type="number" class="form-control" id="zipCode" name="addresses[zipCode]" min = "100000" max="999999" <%# required %> > 
+                <input type="number" class="form-control" id="zipCode" name="addresses[zipCode]" min = "100000" max="999999" required> 
                 <div class="invalid-feedback">Please provide a valid zipcode.</div>
             </div>
             <div class="col-md-3 mt-2">
                 <label for="phoneNo" class="form-label">Phone Number</label>
-                <input type="number" class="form-control" id="phoneNo" name="user[phoneNo]" min="1000000000" max="9999999999" <%# required %> > 
+                <input type="number" class="form-control" id="phoneNo" name="user[phoneNo]" min="1000000000" max="9999999999" required> 
                 <div class="invalid-feedback">Please provide a valid phone number.</div>
             </div>
             
@@ -100,26 +100,6 @@
         </form>
     </div>
 
-    <script>
-        (() => {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-    </script>
 </body>
 
 <%- include('partials/foot')%>

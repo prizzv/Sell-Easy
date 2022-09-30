@@ -81,6 +81,16 @@ const requireLogin = (req, res, next) => {
 const isSellerLogin = (req, res, next) => {
     if(!req.session.isSeller){
         res.cookie('isSeller', 'false');
+        return res.redirect('/login');
+    }else{
+        res.cookie('isSeller', 'true');
+    }
+
+    next();
+}
+const checkSellerLogin = (req, res, next) => {
+    if(!req.session.isSeller){
+        res.cookie('isSeller', 'false');
     }else{
         res.cookie('isSeller', 'true');
     }
@@ -88,7 +98,7 @@ const isSellerLogin = (req, res, next) => {
     next();
 }
 
-const isLoggedin = (req, res, next) => {
+const checkLoggedin = (req, res, next) => {
     if(!req.session.user_id){
         res.cookie('isLoggedin', 'false');
     }else{
@@ -99,7 +109,7 @@ const isLoggedin = (req, res, next) => {
 }
 
 //Home page all the products  
-app.get(['/', '/home'], isLoggedin, wrapAsync(async (req, res) => {
+app.get(['/', '/home'], checkLoggedin, wrapAsync(async (req, res) => {
     const products = await Product.find({})  //find all the products
     let date = new Date().getTime();
 
@@ -151,6 +161,9 @@ app.post('/login', wrapAsync(async (req, res, next)=> {
     const foundUser = await User.findAndValidate(email, password);  // Done in user model 
 
     if(foundUser){
+        foundUser.lastLoginDate = new Date();
+        await foundUser.save();
+
         req.session.user_id = foundUser._id;
         res.cookie('isLoggedin', 'true');
 
@@ -212,6 +225,7 @@ app.get('/new', isSellerLogin, (req, res) => {
 app.post('/product',validateProduct, wrapAsync(async (req, res) => {  // DONE: Change / route to someting else. Post of a new product
 
     const {product} = req.body;     //getting the product details from the body 
+    const seller = await User.findById(req.session.user_id);
 
     //converting the start Date and time 
     let startDate = product.startDate;
@@ -224,9 +238,13 @@ app.post('/product',validateProduct, wrapAsync(async (req, res) => {  // DONE: C
     product.endTime = endDate[1];
     product.endDate = endDate[0];
 
+    product.seller = seller._id;
     const newProduct = new Product(product);
     await newProduct.save();
 
+    seller.productsOwnedList = newProduct;
+    await seller.save();
+    
     res.redirect(`/`);
 }))
 
@@ -262,10 +280,10 @@ app.get('/how_it_works', (req, res) => {
 })
 
 //User details page
-app.get('/userDetails', requireLogin, isSellerLogin, wrapAsync(async( req, res, next) =>{
-    // const {id} = req.params;
-    // const user = await User.findById(id);
-    res.render('userDetails')
+app.get('/userDetails', requireLogin, checkSellerLogin, wrapAsync(async( req, res, next) =>{
+    const user = await User.findById(req.session.user_id);      
+    
+    res.render('userDetails', { user })
 }))
 
 app.get('/secret', (req, res) =>{       // FIXME: Useless delete later 

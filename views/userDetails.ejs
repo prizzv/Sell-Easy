@@ -3,8 +3,121 @@
 <body class="login-signup-body">
 
     <%- include('partials/navbar') %>
-
     
+    <p>User Name: <%= user.name %> </p>
+    <p>User number: <%= user.phoneNo %> </p>
+    <p>User email: <%= user.email %> </p>
+
+    <h3>Type</h3>
+    <% if(user.isSeller){ %> 
+        <p>seller</p>
+        <a href="/new">Create a new product</a>
+    <% }else{ %> 
+        <p>user</p>
+    <% } %> 
+    
+    <h3>First Signup date: <%= user.firstLoginDate %> </h3>
+
+    <h3>Total auctions won</h3>
+    <% let count = 0; %> 
+    <% for(let product of user.productsBought){ %> 
+        <% count++; %> 
+    <% } %>
+    <p><%= count %> </p>
+
+    <div>
+        <ul>
+            <li><p>View profile</p></li>
+            <li><p>Edit address</p></li>
+            <li><p>Change password</p></li>
+            <li><p>Bid logs</p></li>
+            <li><p>Previous Transactions</p></li>
+            <li>
+                <form action="/logout" method="post">
+                    <button style="color: red; background-color:black">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <p>profule  pic</p>
+        <button>Upload image</button>
+        <button>Edit your details</button>
+    </div>
+    <div class="col-8 offset-2">
+        <form class="register-form row g-3 needs-validation" action="/signup" method="post" novalidate >
+            <div class="col-md-3 mt-2">
+                <label for="firstName" class="form-label">First name</label>
+                <input type="text" name="user[firstName]" value = '<%= user.name%>' disabled class="form-control" id="firstName" required> 
+            </div>
+
+            <div class="col-md-3 mt-2">
+                <label for="username" class="form-label">Enter a username</label>
+                <input type="text" disabled value = '<%= user.username %>' name="user[username]" class="form-control" id="username" required> 
+            </div>
+            <div class="col-md-4 mt-2">
+                <label for="validationCustomEmail" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="email" name="user[email]" disabled value = '<%= user.email %>' class="form-control" id="validationCustomEmail"
+                        aria-describedby="inputGroupPrepend" required> 
+                    <div class="invalid-feedback">Please choose a valid Email address.</div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2 mt-3">
+                <label for="form">Gender</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" <% if(user.gender === 'M'){ %> checked <% } %>   id="genderMale" name="user[gender]" value="M" required> 
+                    <label class="form-check-label" for="genderMale">Male</label>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="radio" class="form-check-input" id="genderFemale" <% if(user.gender === 'F'){ %> checked <% } %> name="user[gender]" value="F" required>
+                    <label class="form-check-label" for="genderFemale">Female</label>
+                    <div class="invalid-feedback">Enter a gender</div>
+                </div>
+            </div>
+            
+            
+            <div class="col-md-2">
+                <label for="city" class="form-label">City</label>
+                <input type="text" disabled value = '<%= user.addresses[0].city %>' class="form-control" id="city" name="addresses[city]" required> 
+                <div class="invalid-feedback">Please provide a valid city.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="street" class="form-label">Street</label>
+                <input type="text" disabled value = '<%= user.addresses[0].street %>' class="form-control" id="street" name="addresses[street]" required> 
+                <div class="invalid-feedback">Please provide a valid street.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="state" class="form-label">State</label>
+                <input type="text" disabled value = '<%= user.addresses[0].state %>' class="form-control" id="state" name="addresses[state]" required> 
+                <div class="invalid-feedback">Please provide a valid State.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" disabled value = '<%= user.addresses[0].country %>' class="form-control" id="country" name="addresses[country]" required> 
+                <div class="invalid-feedback">Please provide a valid country.</div>
+            </div>
+            <div class="col-md-2">
+                <label for="landmark" class="form-label">Landmark</label>
+                <input type="text" disabled value = '<%= user.addresses[0].landmark %>' class="form-control" id="landmark" name="addresses[landmark]" >
+            </div>
+            <div class="col-md-3 mt-2">
+                <label for="zipCode" class="form-label">Zip Code</label>
+                <input type="number" disabled value = '<%= user.addresses[0].zipCode %>' class="form-control" id="zipCode" name="addresses[zipCode]" min = "100000" max="999999" required> 
+                <div class="invalid-feedback">Please provide a valid zipcode.</div>
+            </div>
+            <div class="col-md-3 mt-2">
+                <label for="phoneNo" class="form-label">Phone Number</label>
+                <input type="number" disabled value = '<%= user.phoneNo %>' class="form-control" id="phoneNo" name="user[phoneNo]" min="1000000000" max="9999999999" required> 
+                <div class="invalid-feedback">Please provide a valid phone number.</div>
+            </div>
+            
+        </form>
+    </div>
 
 </body>
 
