@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body {
-  background: #2D2A28;
+  background: #1c1917;
   color: white;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -122,10 +122,182 @@ body {
   flex-wrap: wrap;
 }
 .container2 .square-blocks {
-  background-color: #9b6060;
+  background-color: rgba(23, 170, 195, 0.4784313725);
   margin: 15px;
 }
 .container2 img {
   width: 300px;
   height: 300px;
+}
+.container2 h3 {
+  text-align: center;
+}
+
+.product-heading {
+  margin-top: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+  background-color: rgba(40, 39, 37, 0.9215686275);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+.product-heading .time-remaining-h3 {
+  font-size: 1.2em;
+}
+.product-heading .product-price-date {
+  display: flex;
+  flex-direction: column;
+}
+.product-heading .product-date {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.product-heading .product-date p {
+  margin-right: 1rem;
+}
+
+.details-section {
+  margin-top: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+  display: flex;
+  flex-direction: row;
+  min-height: 350px;
+  justify-content: flex-end;
+}
+.details-section .details-div {
+  background-color: rgba(40, 39, 37, 0.9215686275);
+  border-right: 1px solid white;
+}
+.details-section .details-div2 {
+  background-color: rgba(40, 39, 37, 0.9215686275);
+  min-width: 350px;
+}
+.details-section .details-div2 p {
+  padding-left: 0.25em;
+  border-bottom: 1px solid white;
+}
+.details-section .details-div2 form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.details-section .details-div2 label {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.details-section .details-div2 button {
+  margin-top: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+  background-color: #d49119;
+  border: none;
+  width: 140px;
+  height: 39px;
+  color: white;
+}
+.details-section .product-description {
+  border-bottom: 1px solid white;
+}
+.details-section h3 {
+  padding: 0.35em;
+  background-color: #1616cf;
+  border-bottom: 1px solid white;
+}
+.details-section .bid-info {
+  padding: 0.35em;
+  font-size: 1em;
+  background-color: #1616cf;
+  border-bottom: 1px solid white;
+}
+
+.home-h2 {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: 0.6em;
+  color: black;
+  background-image: linear-gradient(#284d0c, #6cd41d, #bdd63b);
+  font-weight: 600;
+  font-size: 1.6em;
+  padding-left: 0.6em;
+  padding-top: 0.2em;
+  padding-bottom: 0.3em;
+  border: 1px #0a5c1a solid;
+}
+
+.home-products-section {
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  background-color: rgba(40, 39, 37, 0.9215686275);
+}
+
+.date-price-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.date-price-div p {
+  margin: 0.5em;
+}
+
+.userDetails-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgba(40, 39, 37, 0.9215686275);
+}
+.userDetails-section div {
+  padding: 0.5em;
+  margin: 0.75em;
+  border-right: 1px white solid;
+}
+.userDetails-section .auctions-won-div {
+  border-right: 1px rgba(40, 39, 37, 0.9215686275) solid;
+}
+
+.userDetails-info-section {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5em;
+}
+.userDetails-info-section div {
+  background-color: rgba(40, 39, 37, 0.9215686275);
+}
+.userDetails-info-section .logoutButton {
+  color: red;
+  background-color: black;
+}
+.userDetails-info-section .userDetails-top-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px white solid;
+}
+.userDetails-info-section .userDetails-top-div .items {
+  margin: 0.25em;
+}
+.userDetails-info-section .userDetails-top-div button {
+  background-color: #0d2f43;
+  border: none;
+  color: #C7E1E2;
+  padding: 0.75em;
+}
+.userDetails-info-section .userDetails-panel {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+.userDetails-info-section .userDetails-panel ul {
+  list-style-type: none;
+  margin: 0.25em;
+  padding: 0em;
+  font-size: 1.25em;
+}
+.userDetails-info-section .current {
+  background-color: #648465;
 }/*# sourceMappingURL=main.css.map */

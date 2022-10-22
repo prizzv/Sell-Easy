@@ -1,7 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+$light-bg: #282725eb;
 
 body {
-    background: #2D2A28;
+    background: #1c1917;
     color: white;
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -118,20 +119,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-// .live-products-section{
-//     color: white;
-//     background-color: #4D4F50;
-// }
-
-// .upcomming-products-section{
-//     color: white;
-//     background-color: #4D4F50;
-// }
-// .previous-products-section{
-//     color: white;
-//     background-color: #4D4F50;
-// }
-
 .container2{
     display: flex;
     justify-content: center;
@@ -139,11 +126,193 @@ body {
     flex-wrap: wrap;
 
     .square-blocks{
-        background-color: #9b6060;
+        background-color: #17aac37a;
         margin: 15px;
     }
     img{
         width: 300px;
         height: 300px;
+    }
+    h3{
+        text-align: center;
+    }
+}
+//Products page
+.product-heading{
+    margin-top: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: $light-bg;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    
+    .time-remaining-h3{
+        font-size: 1.2em;
+
+    }
+    .product-price-date{
+        display: flex;
+        flex-direction: column;
+    }
+    .product-date{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        p{
+            margin-right: 1rem;
+        }
+    }
+}
+
+//Products page
+.details-section{
+    margin-top: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    display: flex;
+    flex-direction: row;
+    min-height: 350px;
+    justify-content: flex-end;
+
+    .details-div{
+        background-color: $light-bg;
+        border-right: 1px solid white;
+        
+    }
+    .details-div2{
+        background-color: $light-bg;
+        min-width: 350px;
+        p{
+            padding-left: .25em;
+            border-bottom: 1px solid white;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label{
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+        button{
+            margin-top: 1em;
+            margin-left: 1em;
+            margin-right: 1em;
+            background-color: #d49119;
+            border: none;
+            width: 140px;
+            height: 39px;
+            color: white;
+        }
+    }
+    .product-description{
+        border-bottom: 1px solid white;
+    }
+    h3{
+        padding: .35em;
+        background-color: #1616cf;
+        border-bottom: 1px solid white;
+    }
+    .bid-info{
+        padding: .35em;
+        font-size: 1em;
+        background-color: #1616cf;
+        border-bottom: 1px solid white;
+    }    
+}
+
+//Home page
+.home-h2{
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-top: 0.6em;
+    color: black;
+    background-image: linear-gradient(#284d0c, #6cd41d, #bdd63b);
+    font-weight: 600;
+    font-size: 1.6em;
+    padding-left: 0.6em;
+    padding-top: 0.2em;
+    padding-bottom: 0.3em;
+    border: 1px #0a5c1a solid;
+}
+.home-products-section{
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-left: 12px;
+    background-color: $light-bg;
+}
+.date-price-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    p{
+        margin: 0.5em;
+    }
+}
+
+//User details page
+.userDetails-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: $light-bg;
+
+    div{
+        padding: 0.5em;
+        margin: 0.75em;
+        border-right: 1px white solid;
+    }
+
+    .auctions-won-div{      //removing the border in the last div
+        border-right: 1px $light-bg solid;
+    }
+}
+.userDetails-info-section{
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5em;
+
+    div{
+        background-color: $light-bg;
+    }
+    .logoutButton{
+        color: red; background-color:black
+    }
+
+    .userDetails-top-div{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px white solid;
+        
+        .items{
+            margin: 0.25em;
+        }
+        button{
+            background-color: #0d2f43;
+            border: none;
+            color: #C7E1E2;
+            padding: 0.75em;
+        }
+    }
+    .userDetails-panel{
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+
+        ul {  
+            list-style-type: none;  
+            margin: 0.25em;
+            padding: 0em;
+            font-size: 1.25em;
+        }
+    }
+    .current{
+        background-color: #648465;
     }
 }

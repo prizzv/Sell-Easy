@@ -4,8 +4,8 @@
     <body>
         <%- include('partials/navbar') %>
 
-		<section class="live-products-section">
-            <h2>Live auction Products</h2>
+		<section class="home-products-section">
+            <h2 class="home-h2">Live auction Products</h2>
             
             <div class="container2">
                 
@@ -14,33 +14,37 @@
                         <div class="square-blocks">
                             <a href="/products/<%= product._id %>"><img <%# src="/images/test" %>   ></a>
                             <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
-                            <p ><%= product.endDate %></p>
-                            <p ><%= product.price %></p>
+                            <div class="date-price-div">
+                                <p >End Date: <%= product.endDate %></p>
+                                <p >Price: <%= product.price %></p>
+                            </div>
                         </div>
                         <% } %> 
                 <% } %>
             </div>
         </section>
 
-		<section class="upcomming-products-section">
-            <h2>Upcomming auction Products</h2>
+		<section class="home-products-section">
+            <h2 class="home-h2">Upcomming auction Products</h2>
             
             <div class="container2">
                 <% for(let product of products) { %>
                     <% if(product.isLive == false && product.isCompleted == false){ %> 
                         <div class="square-blocks">
                             <a href="/products/<%= product._id %>"><img <%# src="/images/test" %>  ></a>
-                            <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
-                            <p ><%= product.startDate %></p>
-                            <p ><%= product.price %></p>
+                            <a href="/products/<%= product._id %>"> <h3 class="product-name"><%= product.name %></h3> </a>
+                            <div class="date-price-div">
+                                <p >End Date: <%= product.startDate %></p>
+                                <p >Price: <%= product.price %></p>
+                            </div>
                         </div>
                     <% } %> 
                 <% } %>
             </div>
         </section>
 
-		<section class="previous-products-section">
-            <h2>Previous auction Products</h2>
+		<section class="home-products-section">
+            <h2 class="home-h2">Previous auction Products</h2>
             
             <div class="container2">
                 <% for(let product of products) { %>
@@ -48,8 +52,10 @@
                         <div class="square-blocks">
                             <a href="/products/<%= product._id %>"><img <%# src="/images/test" %>  ></a>
                             <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
-                            <p ><%= product.endDate %></p>
-                            <p ><%= product.price %></p>
+                            <div class="date-price-div">
+                                <p >End Date: <%= product.endDate %></p>
+                                <p >Price: <%= product.price %></p>
+                            </div>
                         </div>
                     <% } %> 
                 <% } %>

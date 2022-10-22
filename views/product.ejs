@@ -3,29 +3,43 @@
     <body>
         <%- include('partials/navbar') %>
         
-        <section>
+        <section class="product-heading">
+            
             <h3> <%= product.name %> </h3>
-            <h3>Current price: <%= product.price %> </h3>
-            <h3><span id="startEndTimerH3"></span> <span class="remainingTime" id="remainingTime"></span></h3>
-            <p>startDate: <%= product.startDate %> </p>
-            <p>endDate: <%= product.endDate %> </p>
-
+            <div class="product-price-date">
+                <h3>Current price: <%= product.price %> </h3>
+                <div class = "product-date">
+                    <p>startDate: <%= product.startDate %></p>
+                    <p>endDate: <%= product.endDate %></p>
+                </div>
+            </div>
+            <h3 class="time-remaining-h3"><span id="startEndTimerH3"></span> <span class="remainingTime" id="remainingTime"></span></h3>
         </section>
 
-        <section>
+        <section class="details-section">
             <!-- <img src="" alt="">  <%# TODO: show product image on left side %>  -->
-            <div>
-                <h2>Product Description</h2>
-                <p> <%= product.description %>  </p>
-                <h2>Seller Description</h2>
-                <p> <%# seller.description %>  </p>  <%# TODO: seller description %> 
+            <div class="details-div">
+                <div class="product-description">
+                    <h3>Product Description</h3>
+                    <p> <%= product.description %>  </p>
+                </div>
+                <div>
+                    <h3>Seller Description</h3>
+                    <p> <%# seller.sellerDetails %>  </p>  <%# TODO: seller description %> 
+                </div>
             </div>
+            <div class="details-div2">
+                <h2 class="bid-info">Bid information</h2>
+                <p>Bid status :</p>
+                <p>Sale status :</p>
+                <p>Current Bid price: <%= product.price %> </p>
 
-            <form action="/products/<%= product.id %>" method="POST">
-                <label for="bid" >Enter bid ammount </label>
-                <input type="number" name="bid" id="bid" placeholder="Minimum <%= product.increment %> ">
-                <button id = "placeBidBtn">Place Bid</button>
-            </form>
+                <form action="/products/<%= product.id %>" method="POST">
+                    <label for="bid" >Enter ammount: <input type="number" name="bid" id="bid" placeholder="Minimum <%= product.increment %> "></label>
+                    
+                    <button id = "placeBidBtn">Place Bid</button>
+                </form>
+            </div>
 
         </section>
 
@@ -66,12 +80,12 @@
             }
 
             if(startDate < now && endDate > now){  //Check if the date is in between the current time 
-                document.getElementById("startEndTimerH3").innerHTML = "Time remaining to end: ";
+                document.getElementById("startEndTimerH3").innerHTML = "Time to end: ";
                 getTimer(endDate);
 
             }else if(startDate > now && endDate > now){     // Upcomming product
                 //DONE: get the timer to work again without repeating the code
-                document.getElementById("startEndTimerH3").innerHTML = "Time remaining to start: ";
+                document.getElementById("startEndTimerH3").innerHTML = "Time to start: ";
                 getTimer(startDate);
                 document.getElementById("bid").disabled = true;
                 document.getElementById("placeBidBtn").disabled = true;
