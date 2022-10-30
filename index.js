@@ -279,6 +279,11 @@ app.get('/how_it_works', (req, res) => {
     res.render('how_it_works')
 })
 
+app.get('/seller_request', (req, res) => {
+
+    res.render('seller_request');
+})
+
 //User details page
 app.get('/userDetails', requireLogin, checkSellerLogin, wrapAsync(async( req, res, next) =>{
     const user = await User.findById(req.session.user_id);      
