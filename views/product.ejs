@@ -17,28 +17,31 @@
         </section>
 
         <section class="details-section">
-            <!-- <img src="" alt="">  <%# TODO: show product image on left side %>  -->
-            <div class="details-div">
-                <div class="product-description">
-                    <h3>Product Description</h3>
-                    <p> <%= product.description %>  </p>
+            <img src="<%= product.imgLink %>" alt="">  <%# TODO: show product image on left side %> 
+            
+            <div class="enclosed">
+                <div class="details-div">
+                    <div class="product-description">
+                        <h3>Product Description</h3>
+                        <p> <%= product.description %>  </p>
+                    </div>
+                    <div>
+                        <h3>Seller Description</h3>
+                        <p> <%# seller.sellerDetails %>  </p>  <%# TODO: seller description %> 
+                    </div>
                 </div>
-                <div>
-                    <h3>Seller Description</h3>
-                    <p> <%# seller.sellerDetails %>  </p>  <%# TODO: seller description %> 
-                </div>
-            </div>
-            <div class="details-div2">
-                <h2 class="bid-info">Bid information</h2>
-                <p>Bid status :</p>
-                <p>Sale status :</p>
-                <p>Current Bid price: <%= product.price %> </p>
+                <div class="details-div2">
+                    <h2 class="bid-info">Bid information</h2>
+                    <p>Bid status :</p>
+                    <p>Sale status :</p>
+                    <p>Current Bid price: <%= product.price %> </p>
 
-                <form action="/products/<%= product.id %>" method="POST">
-                    <label for="bid" >Enter ammount: <input type="number" name="bid" id="bid" placeholder="Minimum <%= product.increment %> "></label>
-                    
-                    <button id = "placeBidBtn">Place Bid</button>
-                </form>
+                    <form action="/products/<%= product.id %>" method="POST">
+                        <label for="bid" >Enter ammount: <input type="number" name="bid" id="bid" placeholder="Minimum <%= product.increment %> "></label>
+                        
+                        <button id = "placeBidBtn">Place Bid</button>
+                    </form>
+                </div>
             </div>
 
         </section>

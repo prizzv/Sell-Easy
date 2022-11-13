@@ -166,7 +166,11 @@ body {
   display: flex;
   flex-direction: row;
   min-height: 350px;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+.details-section img {
+  width: 350px;
+  height: 350px;
 }
 .details-section .details-div {
   background-color: rgba(40, 39, 37, 0.9215686275);
@@ -212,6 +216,10 @@ body {
   font-size: 1em;
   background-color: #1616cf;
   border-bottom: 1px solid white;
+}
+.details-section .enclosed {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .home-h2 {

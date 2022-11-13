@@ -174,7 +174,12 @@ body {
     display: flex;
     flex-direction: row;
     min-height: 350px;
-    justify-content: flex-end;
+    justify-content: space-between;
+
+    img{
+        width: 350px;
+        height: 350px;
+    }
 
     .details-div{
         background-color: $light-bg;
@@ -223,6 +228,10 @@ body {
         background-color: #1616cf;
         border-bottom: 1px solid white;
     }    
+    .enclosed{
+        display: flex;
+        justify-content: flex-end;
+    }
 }
 
 //Home page
