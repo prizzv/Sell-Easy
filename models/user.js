@@ -89,7 +89,28 @@ userSchema.statics.findAndValidate = async function (email, password) {
         }
         return foundUser;
 
-    } catch (errror) {
+    } catch (error) {
+        return false;
+    }
+}
+//check the user password and change the user password
+userSchema.statics.findAndChangePassword = async function (_id, password, newPassword){
+    try{
+        //validating the user
+        const foundUser = await this.findOne({_id});
+        const isValid = await bcrypt.compare(password, foundUser.password)
+
+        if(!isValid){
+            throw new error;
+        }
+        
+        // since the user password is valid changing the password
+        const hash = await bcrypt.hash(newPassword, 14);
+        foundUser.password = hash;
+
+        return foundUser;
+
+    } catch (error){
         return false;
     }
 }

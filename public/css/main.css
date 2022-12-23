@@ -174,7 +174,7 @@ body {
 }
 .details-section .details-div {
   background-color: rgba(40, 39, 37, 0.9215686275);
-  border-right: 1px solid white;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
 .details-section .details-div2 {
   background-color: rgba(40, 39, 37, 0.9215686275);
@@ -182,7 +182,7 @@ body {
 }
 .details-section .details-div2 p {
   padding-left: 0.25em;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .details-section .details-div2 form {
   display: flex;
@@ -204,18 +204,18 @@ body {
   color: white;
 }
 .details-section .product-description {
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .details-section h3 {
   padding: 0.35em;
   background-color: #1616cf;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .details-section .bid-info {
   padding: 0.35em;
   font-size: 1em;
   background-color: #1616cf;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .details-section .enclosed {
   display: flex;
@@ -262,7 +262,7 @@ body {
 .userDetails-section div {
   padding: 0.5em;
   margin: 0.75em;
-  border-right: 1px white solid;
+  border-right: 1px rgba(255, 255, 255, 0.5) solid;
 }
 .userDetails-section .auctions-won-div {
   border-right: 1px rgba(40, 39, 37, 0.9215686275) solid;
@@ -277,15 +277,23 @@ body {
   background-color: rgba(40, 39, 37, 0.9215686275);
 }
 .userDetails-info-section .logoutButton {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   color: red;
   background-color: black;
+}
+.userDetails-info-section .userDetails-big-div {
+  width: 100%;
+  margin-right: 9px;
 }
 .userDetails-info-section .userDetails-top-div {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px white solid;
+  border-bottom: 1px rgba(255, 255, 255, 0.5) solid;
 }
 .userDetails-info-section .userDetails-top-div .items {
   margin: 0.25em;
@@ -295,8 +303,15 @@ body {
   border: none;
   color: #C7E1E2;
   padding: 0.75em;
+  border-radius: 50px;
 }
 .userDetails-info-section .userDetails-panel {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin-right: 0.5em;
   margin-left: 0.5em;
 }
@@ -306,6 +321,24 @@ body {
   padding: 0em;
   font-size: 1.25em;
 }
+.userDetails-info-section .userDetails-panel .last-li {
+  border: none;
+}
+.userDetails-info-section .userDetails-panel li {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-bottom: rgba(255, 255, 255, 0.5) 1px solid;
+}
 .userDetails-info-section .current {
+  width: 99%;
+  border: none;
+  color: white;
   background-color: #648465;
+}
+.userDetails-info-section .notCurrent {
+  width: 99%;
+  border: none;
+  color: white;
+  background-color: rgba(40, 39, 37, 0.9215686275);
 }/*# sourceMappingURL=main.css.map */

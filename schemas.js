@@ -15,8 +15,7 @@ module.exports.productSchema = Joi.object({
 
 module.exports.userSchema = Joi.object({
     user : Joi.object({
-        firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
+        name: Joi.string().required(),
         username: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{1,30}$')).required(),

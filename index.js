@@ -154,7 +154,7 @@ app.get(['/', '/home'], checkLoggedin, wrapAsync(async (req, res) => {
 //Login page
 app.get('/login', (req, res) => {
 
-    res.render('login')
+    res.render('login');
 })
 app.post('/login', wrapAsync(async (req, res, next)=> { 
     const { email, password } =  req.body;
@@ -172,7 +172,7 @@ app.post('/login', wrapAsync(async (req, res, next)=> {
         
         res.redirect('/home');    // going to home page 
     }else{
-        res.send("Invalid Username or Password")
+        res.send("Invalid Username or Password");
     }
 
 }))
@@ -199,7 +199,6 @@ app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
     user.age = now.getFullYear() - age;
     user.firstLoginDate = now;
     user.lastLoginDate = now;
-    user.name = user.firstName +" "+ user.lastName;
     user.isSeller = false;
 
     const newUser = new User(user);
@@ -211,6 +210,28 @@ app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
 
     res.redirect('home');  // This gives a 302 status code 
 }))
+app.patch('/signup', async (req, res, next) =>{
+    const foundUser = await User.findByIdAndUpdate(req.session.user_id, {addresses: req.body.newAddress});
+    
+    // console.log(foundUser);
+
+    res.redirect('userDetails');
+})
+app.patch('/changePassword', async (req, res, next) =>{
+
+    const foundUser = await User.findAndChangePassword(req.session.user_id, req.body.user.password, req.body.user.newPassword1);  // Done in user model 
+
+    if(foundUser){
+
+        await User.updateOne({_id: req.session.user_id}, {password: foundUser.password});
+                
+    }else{
+        res.send("Password");
+    }
+    
+    res.redirect('userDetails');
+})
+
 app.get('/users', (req, res) => {
 
     res.send('This is users get response')
