@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body {
-  background: #1c1917;
+  background: #cddad8;
   color: white;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -50,7 +50,9 @@ body {
   cursor: pointer;
 }
 
-.form button:hover, .form button:active, .form button:focus {
+.form button:hover,
+.form button:active,
+.form button:focus {
   background: #43A047;
 }
 
@@ -72,7 +74,8 @@ body {
   margin: 0 auto;
 }
 
-.container:before, .container:after {
+.container:before,
+.container:after {
   content: "";
   display: block;
   clear: both;
@@ -137,7 +140,7 @@ body {
   margin-top: 1em;
   padding-left: 2em;
   padding-right: 2em;
-  background-color: rgba(40, 39, 37, 0.9215686275);
+  background-color: #cddad8;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -173,11 +176,11 @@ body {
   height: 350px;
 }
 .details-section .details-div {
-  background-color: rgba(40, 39, 37, 0.9215686275);
+  background-color: #cddad8;
   border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
 .details-section .details-div2 {
-  background-color: rgba(40, 39, 37, 0.9215686275);
+  background-color: #cddad8;
   min-width: 350px;
 }
 .details-section .details-div2 p {
@@ -226,21 +229,20 @@ body {
   margin-left: 0.5em;
   margin-right: 0.5em;
   margin-top: 0.6em;
-  color: #a0a59f;
-  background-image: linear-gradient(#2a2c29, #242624, #171a0c);
+  color: #000000;
+  background-image: linear-gradient(#cddad8, rgba(185, 194, 196, 0.5333333333), #cddad8);
   font-weight: 600;
   font-size: 1.6em;
   padding-left: 0.6em;
   padding-top: 0.2em;
   padding-bottom: 0.3em;
-  border: 1px #030604 solid;
 }
 
 .home-products-section {
   margin-left: 12px;
   margin-right: 12px;
   margin-left: 12px;
-  background-color: rgba(40, 39, 37, 0.9215686275);
+  background-color: #cddad8;
 }
 
 .date-price-div {
@@ -257,7 +259,7 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  background-color: rgba(40, 39, 37, 0.9215686275);
+  background-color: #cddad8;
 }
 .userDetails-section div {
   padding: 0.5em;
@@ -265,7 +267,7 @@ body {
   border-right: 1px rgba(255, 255, 255, 0.5) solid;
 }
 .userDetails-section .auctions-won-div {
-  border-right: 1px rgba(40, 39, 37, 0.9215686275) solid;
+  border-right: 1px #cddad8 solid;
 }
 
 .userDetails-info-section {
@@ -274,7 +276,7 @@ body {
   margin-top: 0.5em;
 }
 .userDetails-info-section div {
-  background-color: rgba(40, 39, 37, 0.9215686275);
+  background-color: #cddad8;
 }
 .userDetails-info-section .logoutButton {
   width: 100%;
@@ -340,5 +342,5 @@ body {
   width: 99%;
   border: none;
   color: white;
-  background-color: rgba(40, 39, 37, 0.9215686275);
+  background-color: #cddad8;
 }/*# sourceMappingURL=main.css.map */

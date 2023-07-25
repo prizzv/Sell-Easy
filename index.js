@@ -8,21 +8,13 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser');
 
 //Database imports
-const mongoose = require('mongoose');
 const Product = require('./models/products');
 const User = require('./models/user');
+const connection = require('./db.js');
 
 const wrapAsync = require('./utils/wrapAsync');
 const ExpressError = require('./utils/ExpressError');
 const { productSchema, userSchema } = require('./schemas.js');
-
-mongoose.connect('mongodb://localhost:27017/auctionSystem')
-    .then(() => {
-        console.log("Mongo CONNECTION OPEN");
-    })
-    .catch((err) => {
-        console.log(`error ${err}`);
-    })
 
 //To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }))
@@ -51,26 +43,26 @@ and then subtract it with the start time to get the remaining time.
 
 const validateProduct = (req, res, next) => {       //product schema validation check
     const { error } = productSchema.validate(req.body);
-    if(error){
+    if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
-    }else {
+    } else {
         next();
     }
 }
 
 const validateUser = (req, res, next) => {      //user schema validation check
     const { error } = userSchema.validate(req.body);
-    if(error){
+    if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
-    }else {
+    } else {
         next();
     }
 }
 
 const requireLogin = (req, res, next) => {
-    if(!req.session.user_id){
+    if (!req.session.user_id) {
         res.cookie('isLoggedin', 'false');
         return res.redirect('/login')
     }
@@ -79,19 +71,19 @@ const requireLogin = (req, res, next) => {
     next();
 }
 const isSellerLogin = (req, res, next) => {
-    if(!req.session.isSeller){
+    if (!req.session.isSeller) {
         res.cookie('isSeller', 'false');
         return res.redirect('/login');
-    }else{
+    } else {
         res.cookie('isSeller', 'true');
     }
 
     next();
 }
 const checkSellerLogin = (req, res, next) => {
-    if(!req.session.isSeller){
+    if (!req.session.isSeller) {
         res.cookie('isSeller', 'false');
-    }else{
+    } else {
         res.cookie('isSeller', 'true');
     }
 
@@ -99,9 +91,9 @@ const checkSellerLogin = (req, res, next) => {
 }
 
 const checkLoggedin = (req, res, next) => {
-    if(!req.session.user_id){
+    if (!req.session.user_id) {
         res.cookie('isLoggedin', 'false');
-    }else{
+    } else {
         res.cookie('isLoggedin', 'true');
     }
 
@@ -137,7 +129,7 @@ app.get(['/', '/home'], checkLoggedin, wrapAsync(async (req, res) => {
             if (product.isLive == false && product.isCompleted == true) {
                 continue;
             }
-            if(product.lastBid){        // if someone has bid on the product last time only then do following
+            if (product.lastBid) {        // if someone has bid on the product last time only then do following
                 const user = await User.findById(product.lastBid);    //find the user and update the user with the product since he has won the product 
                 user.productsBought = product;
                 await user.save();
@@ -156,11 +148,11 @@ app.get('/login', (req, res) => {
 
     res.render('login');
 })
-app.post('/login', wrapAsync(async (req, res, next)=> { 
-    const { email, password } =  req.body;
+app.post('/login', wrapAsync(async (req, res, next) => {
+    const { email, password } = req.body;
     const foundUser = await User.findAndValidate(email, password);  // Done in user model 
 
-    if(foundUser){
+    if (foundUser) {
         foundUser.lastLoginDate = new Date();
         await foundUser.save();
 
@@ -169,9 +161,9 @@ app.post('/login', wrapAsync(async (req, res, next)=> {
 
         req.session.isSeller = foundUser.isSeller;
         res.cookie('isSeller', foundUser.isSeller);
-        
+
         res.redirect('/home');    // going to home page 
-    }else{
+    } else {
         res.send("Invalid Username or Password");
     }
 
@@ -189,13 +181,13 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
     const { user, addresses } = req.body;
-    
+
     const hash = await bcrypt.hash(user.password, 14);
     user.password = hash;
     user.addresses = addresses;
     const now = new Date();
     let age = new Date(user.birthDate).getFullYear();
-    
+
     user.age = now.getFullYear() - age;
     user.firstLoginDate = now;
     user.lastLoginDate = now;
@@ -203,32 +195,32 @@ app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
 
     const newUser = new User(user);
     await newUser.save();
-    
+
     // DONE: use cookies to store user data
     req.session.user_id = newUser._id;
     req.session.isSeller = newUser.isSeller;
 
     res.redirect('home');  // This gives a 302 status code 
 }))
-app.patch('/signup', async (req, res, next) =>{
-    const foundUser = await User.findByIdAndUpdate(req.session.user_id, {addresses: req.body.newAddress});
-    
+app.patch('/signup', async (req, res, next) => {
+    const foundUser = await User.findByIdAndUpdate(req.session.user_id, { addresses: req.body.newAddress });
+
     // console.log(foundUser);
 
     res.redirect('userDetails');
 })
-app.patch('/changePassword', async (req, res, next) =>{
+app.patch('/changePassword', async (req, res, next) => {
 
     const foundUser = await User.findAndChangePassword(req.session.user_id, req.body.user.password, req.body.user.newPassword1);  // Done in user model 
 
-    if(foundUser){
+    if (foundUser) {
 
-        await User.updateOne({_id: req.session.user_id}, {password: foundUser.password});
-                
-    }else{
+        await User.updateOne({ _id: req.session.user_id }, { password: foundUser.password });
+
+    } else {
         res.send("Password");
     }
-    
+
     res.redirect('userDetails');
 })
 
@@ -243,9 +235,9 @@ app.get('/new', isSellerLogin, (req, res) => {
     res.render('new');
 })
 //Getting data from the new product 
-app.post('/product',validateProduct, wrapAsync(async (req, res) => {  // DONE: Change / route to someting else. Post of a new product
+app.post('/product', validateProduct, wrapAsync(async (req, res) => {  // DONE: Change / route to someting else. Post of a new product
 
-    const {product} = req.body;     //getting the product details from the body 
+    const { product } = req.body;     //getting the product details from the body 
     const seller = await User.findById(req.session.user_id);
 
     //converting the start Date and time 
@@ -265,7 +257,7 @@ app.post('/product',validateProduct, wrapAsync(async (req, res) => {  // DONE: C
 
     seller.productsOwnedList = newProduct;
     await seller.save();
-    
+
     res.redirect(`/`);
 }))
 
@@ -283,7 +275,7 @@ app.post('/products/:id', requireLogin, wrapAsync(async (req, res, next) => {   
 
     product.lastBid = req.session.user_id;   // Adds the current userID to the products lastBid 
 
-    if(req.body.bid < product.increment){  // increment price should not be less than minimum increment
+    if (req.body.bid < product.increment) {  // increment price should not be less than minimum increment
         throw new ExpressError("Ammount too low", 406);  // not acceptable  
     }
 
@@ -306,14 +298,14 @@ app.get('/seller_request', (req, res) => {
 })
 
 //User details page
-app.get('/userDetails', requireLogin, checkSellerLogin, wrapAsync(async( req, res, next) =>{
-    const user = await User.findById(req.session.user_id);      
-    
+app.get('/userDetails', requireLogin, checkSellerLogin, wrapAsync(async (req, res, next) => {
+    const user = await User.findById(req.session.user_id);
+
     res.render('userDetails', { user })
 }))
 
-app.get('/secret', (req, res) =>{       // FIXME: Useless delete later 
-    if(!req.session.user_id){
+app.get('/secret', (req, res) => {       // FIXME: Useless delete later 
+    if (!req.session.user_id) {
         return res.redirect('/login')
     }
     res.send("HUSHHHHHHHHHHHHHH");
@@ -326,12 +318,12 @@ app.listen(5000, () => {
 
 // To handle all the remaining path errors
 app.all('*', (req, res, next) => {
-    
+
     next(new ExpressError('Page not found', 404));
 })
 
 app.use((err, req, res, next) => {
-    const {statusCode = 500, message = 'Something went wrong'}  = err;
+    const { statusCode = 500, message = 'Something went wrong' } = err;
     res.status(statusCode).send(message);
     // res.send("Something went wrong :(");
 })

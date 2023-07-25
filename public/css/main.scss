@@ -1,9 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-$light-bg: #282725eb;
+$light-bg: #cddad8;
 $white-border: rgba(255, 255, 255, 0.5);
+$text-color: #000000;
 
 body {
-    background: #1c1917;
+    background: $light-bg;
     color: white;
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -54,7 +55,9 @@ body {
     cursor: pointer;
 }
 
-.form button:hover, .form button:active, .form button:focus {
+.form button:hover,
+.form button:active,
+.form button:focus {
     background: #43A047;
 }
 
@@ -77,7 +80,8 @@ body {
     margin: 0 auto;
 }
 
-.container:before, .container:after {
+.container:before,
+.container:after {
     content: "";
     display: block;
     clear: both;
@@ -120,26 +124,29 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.container2{
+.container2 {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 
-    .square-blocks{
+    .square-blocks {
         background-color: #17aac37a;
         margin: 15px;
     }
-    img{
+
+    img {
         width: 300px;
         height: 300px;
     }
-    h3{
+
+    h3 {
         text-align: center;
     }
 }
+
 //Products page
-.product-heading{
+.product-heading {
     margin-top: 1em;
     padding-left: 2em;
     padding-right: 2em;
@@ -148,27 +155,30 @@ body {
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    
-    .time-remaining-h3{
+
+    .time-remaining-h3 {
         font-size: 1.2em;
 
     }
-    .product-price-date{
+
+    .product-price-date {
         display: flex;
         flex-direction: column;
     }
-    .product-date{
+
+    .product-date {
         display: flex;
         justify-content: space-between;
         flex-direction: row;
-        p{
+
+        p {
             margin-right: 1rem;
         }
     }
 }
 
 //Products page
-.details-section{
+.details-section {
     margin-top: 1em;
     padding-left: 2em;
     padding-right: 2em;
@@ -177,34 +187,38 @@ body {
     min-height: 350px;
     justify-content: space-between;
 
-    img{
+    img {
         width: 350px;
         height: 350px;
     }
 
-    .details-div{
+    .details-div {
         background-color: $light-bg;
         border-right: 1px solid $white-border;
-        
+
     }
-    .details-div2{
+
+    .details-div2 {
         background-color: $light-bg;
         min-width: 350px;
-        p{
+
+        p {
             padding-left: .25em;
             border-bottom: 1px solid $white-border;
         }
-        form{
+
+        form {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        label{
+        label {
             margin-left: 1em;
             margin-right: 1em;
         }
-        button{
+
+        button {
             margin-top: 1em;
             margin-left: 1em;
             margin-right: 1em;
@@ -215,103 +229,114 @@ body {
             color: white;
         }
     }
-    .product-description{
+
+    .product-description {
         border-bottom: 1px solid $white-border;
     }
-    h3{
+
+    h3 {
         padding: .35em;
         background-color: #1616cf;
         border-bottom: 1px solid $white-border;
     }
-    .bid-info{
+
+    .bid-info {
         padding: .35em;
         font-size: 1em;
         background-color: #1616cf;
         border-bottom: 1px solid $white-border;
-    }    
-    .enclosed{
+    }
+
+    .enclosed {
         display: flex;
         justify-content: flex-end;
     }
 }
 
 //Home page
-.home-h2{
+.home-h2 {
     margin-left: 0.5em;
     margin-right: 0.5em;
     margin-top: 0.6em;
-    color: #a0a59f;
-    background-image: linear-gradient(#2a2c29, #242624, #171a0c);
+    color: $text-color;
+    background-image: linear-gradient($light-bg, #b9c2c488, $light-bg);
     font-weight: 600;
     font-size: 1.6em;
     padding-left: 0.6em;
     padding-top: 0.2em;
     padding-bottom: 0.3em;
-    border: 1px #030604 solid;
 }
-.home-products-section{
+
+.home-products-section {
     margin-left: 12px;
     margin-right: 12px;
     margin-left: 12px;
     background-color: $light-bg;
 }
-.date-price-div{
+
+.date-price-div {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    p{
+
+    p {
         margin: 0.5em;
     }
 }
 
 //User details page
-.userDetails-section{
+.userDetails-section {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     background-color: $light-bg;
 
-    div{
+    div {
         padding: 0.5em;
         margin: 0.75em;
         border-right: 1px $white-border solid;
     }
 
-    .auctions-won-div{      //removing the border in the last div
+    .auctions-won-div {
+        //removing the border in the last div
         border-right: 1px $light-bg solid;
     }
 }
-.userDetails-info-section{
+
+.userDetails-info-section {
     display: flex;
     flex-direction: row;
     margin-top: 0.5em;
 
-    div{
+    div {
         background-color: $light-bg;
     }
-    .logoutButton{
+
+    .logoutButton {
         width: 100%;
         height: fit-content;
-        color: red; background-color:black
+        color: red;
+        background-color: black
     }
-    
-    .userDetails-big-div{
+
+    .userDetails-big-div {
         width: 100%;
         margin-right: 9px;
     }
 
-    .userDetails-top-div{
+    .userDetails-top-div {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
         border-bottom: 1px $white-border solid;
-        
-        .items{
+
+        .items {
             margin: 0.25em;
         }
-        button{
+
+        button {
             background-color: #0d2f43;
             border: none;
             color: #C7E1E2;
@@ -319,35 +344,40 @@ body {
             border-radius: 50px;
         }
     }
-    .userDetails-panel{
+
+    .userDetails-panel {
         width: fit-content;
         height: fit-content;
         margin-right: 0.5em;
         margin-left: 0.5em;
 
-        ul {  
-            list-style-type: none;  
+        ul {
+            list-style-type: none;
             margin: 0.25em;
             padding: 0em;
             font-size: 1.25em;
-            
+
         }
-        .last-li{
+
+        .last-li {
             border: none;
         }
-        li{
+
+        li {
 
             height: fit-content;
             border-bottom: $white-border 1px solid;
         }
     }
-    .current{
+
+    .current {
         width: 99%;
         border: none;
         color: white;
         background-color: #648465;
     }
-    .notCurrent{
+
+    .notCurrent {
         width: 99%;
         border: none;
         color: white;
