@@ -15,6 +15,11 @@ const connection = require('./db.js');
 const wrapAsync = require('./utils/wrapAsync');
 const ExpressError = require('./utils/ExpressError');
 const { productSchema, userSchema } = require('./schemas.js');
+const { isSellerLogin, requireLogin, checkSellerLogin, checkLoggedin } = require('./middleware/auth');
+
+// Routes imports
+const authenticationRoutes = require('./routes/authentication');
+const homeRoutes = require('./routes/home');
 
 //To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }))
@@ -51,183 +56,10 @@ const validateProduct = (req, res, next) => {       //product schema validation 
     }
 }
 
-const validateUser = (req, res, next) => {      //user schema validation check
-    const { error } = userSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
 
-const requireLogin = (req, res, next) => {
-    if (!req.session.user_id) {
-        res.cookie('isLoggedin', 'false');
-        return res.redirect('/login')
-    }
+app.use('/', authenticationRoutes);
+app.use('/', homeRoutes);
 
-    res.cookie('isLoggedin', 'true');
-    next();
-}
-const isSellerLogin = (req, res, next) => {
-    if (!req.session.isSeller) {
-        res.cookie('isSeller', 'false');
-        return res.redirect('/login');
-    } else {
-        res.cookie('isSeller', 'true');
-    }
-
-    next();
-}
-const checkSellerLogin = (req, res, next) => {
-    if (!req.session.isSeller) {
-        res.cookie('isSeller', 'false');
-    } else {
-        res.cookie('isSeller', 'true');
-    }
-
-    next();
-}
-
-const checkLoggedin = (req, res, next) => {
-    if (!req.session.user_id) {
-        res.cookie('isLoggedin', 'false');
-    } else {
-        res.cookie('isLoggedin', 'true');
-    }
-
-    next();
-}
-
-//Home page all the products  
-app.get(['/', '/home'], checkLoggedin, wrapAsync(async (req, res) => {
-    const products = await Product.find({})  //find all the products
-    let date = new Date().getTime();
-
-    //Check if the product is live, upcomming or previously done
-    for (let product of products) {       //FIXME: This will change only when the user refreshes the webpage and not when the timer completes
-        let startDate = stringDate(product.startDate, product.startTime);
-        startDate = new Date(startDate).getTime();
-
-        let endDate = stringDate(product.endDate, product.endTime);
-        endDate = new Date(endDate).getTime();
-
-        if (date < startDate && date < endDate) {
-            if (product.isLive == false && product.isCompleted == false) {      //If already all correct then continue else correct them 
-                continue;
-            }
-            product.isLive = false;
-            product.isCompleted = false;
-        } else if (date > startDate && date < endDate) {
-            if (product.isLive == true && product.isCompleted == false) {
-                continue;
-            }
-            product.isLive = true;
-            product.isCompleted = false;
-        } else if (date > startDate && date > endDate) {
-            if (product.isLive == false && product.isCompleted == true) {
-                continue;
-            }
-            if (product.lastBid) {        // if someone has bid on the product last time only then do following
-                const user = await User.findById(product.lastBid);    //find the user and update the user with the product since he has won the product 
-                user.productsBought = product;
-                await user.save();
-            }
-            product.isLive = false;
-            product.isCompleted = true;
-        }
-        await product.save();   // this will run only if all the above continue conditions fails
-    }
-
-    res.render('home', { products })  // sending productInfo
-}))
-
-//Login page
-app.get('/login', (req, res) => {
-
-    res.render('login');
-})
-app.post('/login', wrapAsync(async (req, res, next) => {
-    const { email, password } = req.body;
-    const foundUser = await User.findAndValidate(email, password);  // Done in user model 
-
-    if (foundUser) {
-        foundUser.lastLoginDate = new Date();
-        await foundUser.save();
-
-        req.session.user_id = foundUser._id;
-        res.cookie('isLoggedin', 'true');
-
-        req.session.isSeller = foundUser.isSeller;
-        res.cookie('isSeller', foundUser.isSeller);
-
-        res.redirect('/home');    // going to home page 
-    } else {
-        res.send("Invalid Username or Password");
-    }
-
-}))
-app.post('/logout', (req, res) => {         // TODO: use this somewhere on user details page 
-    // req.session.user_id = null;          // I can just remove the user_id but the below method is better 
-    req.session.destroy();
-    res.redirect('/home');
-})
-//Signup page
-app.get('/signup', (req, res) => {
-
-    res.render('signup')
-})
-
-app.post('/signup', validateUser, wrapAsync(async (req, res, next) => {
-    const { user, addresses } = req.body;
-
-    const hash = await bcrypt.hash(user.password, 14);
-    user.password = hash;
-    user.addresses = addresses;
-    const now = new Date();
-    let age = new Date(user.birthDate).getFullYear();
-
-    user.age = now.getFullYear() - age;
-    user.firstLoginDate = now;
-    user.lastLoginDate = now;
-    user.isSeller = false;
-
-    const newUser = new User(user);
-    await newUser.save();
-
-    // DONE: use cookies to store user data
-    req.session.user_id = newUser._id;
-    req.session.isSeller = newUser.isSeller;
-
-    res.redirect('home');  // This gives a 302 status code 
-}))
-app.patch('/signup', async (req, res, next) => {
-    const foundUser = await User.findByIdAndUpdate(req.session.user_id, { addresses: req.body.newAddress });
-
-    // console.log(foundUser);
-
-    res.redirect('userDetails');
-})
-app.patch('/changePassword', async (req, res, next) => {
-
-    const foundUser = await User.findAndChangePassword(req.session.user_id, req.body.user.password, req.body.user.newPassword1);  // Done in user model 
-
-    if (foundUser) {
-
-        await User.updateOne({ _id: req.session.user_id }, { password: foundUser.password });
-
-    } else {
-        res.send("Password");
-    }
-
-    res.redirect('userDetails');
-})
-
-app.get('/users', (req, res) => {
-
-    res.send('This is users get response')
-})
 
 //Creating a new product
 app.get('/new', isSellerLogin, (req, res) => {
@@ -328,9 +160,3 @@ app.use((err, req, res, next) => {
     // res.send("Something went wrong :(");
 })
 
-function stringDate(date, time) {
-    let str = date.split("-");
-    str = `${str[1]} ${str[2]}, ${str[0]} ${time}`;
-
-    return str;
-}

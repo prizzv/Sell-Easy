@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-$light-bg: #cddad8;
+$light-bg: #cfd3d37e;
 $white-border: rgba(255, 255, 255, 0.5);
 $text-color: #000000;
 
@@ -286,6 +286,7 @@ body {
 
 //User details page
 .userDetails-section {
+    color: $text-color;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -295,7 +296,7 @@ body {
     div {
         padding: 0.5em;
         margin: 0.75em;
-        border-right: 1px $white-border solid;
+        border-right: 1px $text-color solid;
     }
 
     .auctions-won-div {
@@ -308,6 +309,7 @@ body {
     display: flex;
     flex-direction: row;
     margin-top: 0.5em;
+    color: $text-color;
 
     div {
         background-color: $light-bg;
@@ -373,14 +375,14 @@ body {
     .current {
         width: 99%;
         border: none;
-        color: white;
-        background-color: #648465;
+        color: $text-color;
+        background-color: #138d0f;
     }
 
     .notCurrent {
         width: 99%;
         border: none;
-        color: white;
+        color: $text-color;
         background-color: $light-bg;
     }
 }

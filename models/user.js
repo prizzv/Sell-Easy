@@ -12,9 +12,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    email:{
+    email: {
         type: String,
-        required : true
+        required: true
     },
     password: {
         type: String,
@@ -23,13 +23,13 @@ const userSchema = new mongoose.Schema({
     lastLoginDate: {
         type: Date
     },
-    firstLoginDate:{
+    firstLoginDate: {
         type: Date,
         required: true
     },
-    birthDate:{
+    birthDate: {
         type: String,
-        required : true
+        required: true
     },
     age: {
         type: Number,
@@ -37,28 +37,28 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required : true,  
+        required: true,
         enum: ['M', 'F']
     },
     addresses: [
         {
             // _id: { id: false },
-            street: {type: String, required: true},
-            city: {type: String, required: true},
-            state: {type: String, required: true},
-            country: {type: String, required: true},
-            zipCode: {type: String, required: true},
+            street: { type: String, required: true },
+            city: { type: String, required: true },
+            state: { type: String, required: true },
+            country: { type: String, required: true },
+            zipCode: { type: String, required: true },
             landmark: String
         }
     ],
     phoneNo: {
-        type:Number,
+        type: Number,
         required: true
     },
 
     productsBought: [   //Products bought through an auction or standard site
         {       //Here there is an array of products
-            type:Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Products'
         }
     ],
@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema({
     //Seller schema stuff
     isSeller: Boolean,
     sellerDetails: {
-        type:String,
+        type: String,
     },
     productsOwned: [   //Products placed for selling
         {
@@ -81,10 +81,10 @@ const userSchema = new mongoose.Schema({
 userSchema.statics.findAndValidate = async function (email, password) {
 
     try {
-        const foundUser = await this.findOne({email})
+        const foundUser = await this.findOne({ email })
         const isValid = await bcrypt.compare(password, foundUser.password)
 
-        if(!isValid){
+        if (!isValid) {
             throw new error;
         }
         return foundUser;
@@ -94,23 +94,23 @@ userSchema.statics.findAndValidate = async function (email, password) {
     }
 }
 //check the user password and change the user password
-userSchema.statics.findAndChangePassword = async function (_id, password, newPassword){
-    try{
+userSchema.statics.findAndChangePassword = async function (_id, password, newPassword) {
+    try {
         //validating the user
-        const foundUser = await this.findOne({_id});
+        const foundUser = await this.findOne({ _id });
         const isValid = await bcrypt.compare(password, foundUser.password)
 
-        if(!isValid){
+        if (!isValid) {
             throw new error;
         }
-        
+
         // since the user password is valid changing the password
         const hash = await bcrypt.hash(newPassword, 14);
         foundUser.password = hash;
 
         return foundUser;
 
-    } catch (error){
+    } catch (error) {
         return false;
     }
 }

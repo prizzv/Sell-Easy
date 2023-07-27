@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body {
-  background: #cddad8;
+  background: rgba(207, 211, 211, 0.4941176471);
   color: white;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -140,7 +140,7 @@ body {
   margin-top: 1em;
   padding-left: 2em;
   padding-right: 2em;
-  background-color: #cddad8;
+  background-color: rgba(207, 211, 211, 0.4941176471);
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -176,11 +176,11 @@ body {
   height: 350px;
 }
 .details-section .details-div {
-  background-color: #cddad8;
+  background-color: rgba(207, 211, 211, 0.4941176471);
   border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
 .details-section .details-div2 {
-  background-color: #cddad8;
+  background-color: rgba(207, 211, 211, 0.4941176471);
   min-width: 350px;
 }
 .details-section .details-div2 p {
@@ -230,7 +230,7 @@ body {
   margin-right: 0.5em;
   margin-top: 0.6em;
   color: #000000;
-  background-image: linear-gradient(#cddad8, rgba(185, 194, 196, 0.5333333333), #cddad8);
+  background-image: linear-gradient(rgba(207, 211, 211, 0.4941176471), rgba(185, 194, 196, 0.5333333333), rgba(207, 211, 211, 0.4941176471));
   font-weight: 600;
   font-size: 1.6em;
   padding-left: 0.6em;
@@ -242,7 +242,7 @@ body {
   margin-left: 12px;
   margin-right: 12px;
   margin-left: 12px;
-  background-color: #cddad8;
+  background-color: rgba(207, 211, 211, 0.4941176471);
 }
 
 .date-price-div {
@@ -255,28 +255,30 @@ body {
 }
 
 .userDetails-section {
+  color: #000000;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #cddad8;
+  background-color: rgba(207, 211, 211, 0.4941176471);
 }
 .userDetails-section div {
   padding: 0.5em;
   margin: 0.75em;
-  border-right: 1px rgba(255, 255, 255, 0.5) solid;
+  border-right: 1px #000000 solid;
 }
 .userDetails-section .auctions-won-div {
-  border-right: 1px #cddad8 solid;
+  border-right: 1px rgba(207, 211, 211, 0.4941176471) solid;
 }
 
 .userDetails-info-section {
   display: flex;
   flex-direction: row;
   margin-top: 0.5em;
+  color: #000000;
 }
 .userDetails-info-section div {
-  background-color: #cddad8;
+  background-color: rgba(207, 211, 211, 0.4941176471);
 }
 .userDetails-info-section .logoutButton {
   width: 100%;
@@ -335,12 +337,12 @@ body {
 .userDetails-info-section .current {
   width: 99%;
   border: none;
-  color: white;
-  background-color: #648465;
+  color: #000000;
+  background-color: #138d0f;
 }
 .userDetails-info-section .notCurrent {
   width: 99%;
   border: none;
-  color: white;
-  background-color: #cddad8;
+  color: #000000;
+  background-color: rgba(207, 211, 211, 0.4941176471);
 }/*# sourceMappingURL=main.css.map */

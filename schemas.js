@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 module.exports.productSchema = Joi.object({
-    product : Joi.object({
+    product: Joi.object({
         name: Joi.string().required(),
         description: Joi.string().required(),
         price: Joi.number().required(),
@@ -14,7 +14,7 @@ module.exports.productSchema = Joi.object({
 });
 
 module.exports.userSchema = Joi.object({
-    user : Joi.object({
+    user: Joi.object({
         name: Joi.string().required(),
         username: Joi.string().required(),
         email: Joi.string().required(),
@@ -36,3 +36,7 @@ module.exports.userSchema = Joi.object({
     }).required()
 });
 
+module.exports.loginSchema = Joi.object({
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+});
