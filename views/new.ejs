@@ -2,60 +2,69 @@
 
     <body class="login-signup-body">
         <%- include('partials/navbar') %>
-        
-        <div class="col-8 offset-2 mt-4" >
-            <form class="register-form row g-3 needs-validation" action="/product" method="POST" novalidate>
-                <div class="col-md-3 mt-2">
-                    <label for="name" class="form-label">Name of the Product <sup>*</sup></label>
-                    <input  type="text" name="product[name]" id="name" class="form-control" placeholder="Product Name" required>
-                    <div class="invalid-feedback">Enter name of the product.</div>
-                </div>
 
-                <div class="col-md-5 mt-2">
-                    <label for="description" class="form-label">Product description <sup>*</sup></label>
-                    <textarea  class="form-control" name="product[description]" id="description" cols="40" rows="3" required></textarea>
-                    <div class="invalid-feedback">Description is required</div>
-                </div>
+            <div class="col-8 offset-2 mt-4">
+                <form class="register-form row g-3 needs-validation" action="/newProduct" method="POST" novalidate>
+                    <div class="col-md-3 mt-2">
+                        <label for="name" class="form-label">Name of the Product <sup>*</sup></label>
+                        <input type="text" name="product[name]" id="name" class="form-control"
+                            placeholder="Product Name" required>
+                        <div class="invalid-feedback">Enter name of the product.</div>
+                    </div>
 
-                <!-- <label for="productImg">Select an image of the product <sup>*</sup></label>  <%#TODO: Take the user input for an image %> 
+                    <div class="col-md-5 mt-2">
+                        <label for="description" class="form-label">Product description <sup>*</sup></label>
+                        <textarea class="form-control" name="product[description]" id="description" cols="40" rows="3"
+                            required></textarea>
+                        <div class="invalid-feedback">Description is required</div>
+                    </div>
+
+                    <!-- <label for="productImg">Select an image of the product <sup>*</sup></label>  <%#TODO: Take the user input for an image %> 
                 <input  type="file" name="productImg" id="productImg"> -->
-                
-                <div class="col-3 mt-2">
-                    <label for="price" class="form-label">Starting price <sup>*</sup></label>
-                    <input type="number" name="product[price]" class="form-control" id="price" placeholder="In Rs" min=100 required>
-                    <div class="invalid-feedback">Enter the auction starting price</div>
-                </div>
-                <div class="col-md-2 mt-2">
-                    <label for="shipping" class="form-label">Shipping Charges <sup>*</sup></label>
-                    <input type="number" class="form-control" name="product[shipping]" id="shipping" placeholder="In Rs" min=0 required>
-                </div>
-                <div class="col-md-2 mt-2">
-                    <label for="increment" class="form-label">Price increment <sup>*</sup></label>
-                    <input  type="number" name="product[increment]"  class="form-control"id="increment" placeholder="In Rs" min=1 required>
-                    <div class="invalid-feedback">Please enter the minimum price increment</div>
-                </div>
-                <div class="col-md-2 mt-2">
-                    <label for="deliver" class="form-label">Delivery days details<sup>*</sup></label>
-                    <input type="text" name="product[deliver]" id="deliver" class="form-control" placeholder="Days to deliver"required>
-                    <div class="invalid-feedback">Enter the days to deliver</div>
-                </div>
-                
-                <div class="col-md-4 mt-2">
-                    <label for="startDate" class="form-label mb-4">Start Date and Time</label>   <%# if not mentioned it will take the current date  %> 
-                    <input type="datetime-local" id="startDate" class="form-control" name="product[startDate]" min="<%= new Date().toISOString().slice(0,10)%>T00:00">
-                </div>
-                <div class="col-md-4 mt-2">
-                    <label for="endDate" class="form-label mb-4">End Date and Time<sup>*</sup></label>
-                    <input  type="datetime-local" id="endDate" name="product[endDate]" class="form-control" min="<%= new Date().toISOString().slice(0,10)%>T01:00" required>
-                    <div class="invalid-feedback">Enter the time and date to end the Auction</div>
-                </div>
 
-                <div class="col-12 mt-3">
-                    <button type = 'submit' class="mt-2 btn btn-primary">Create new Auction</button>
-                </div>
-            </form>
-        </div>
+                    <div class="col-3 mt-2">
+                        <label for="price" class="form-label">Starting price <sup>*</sup></label>
+                        <input type="number" name="product[price]" class="form-control" id="price" placeholder="In Rs"
+                            min=100 required>
+                        <div class="invalid-feedback">Enter the auction starting price</div>
+                    </div>
+                    <div class="col-md-2 mt-2">
+                        <label for="shipping" class="form-label">Shipping Charges <sup>*</sup></label>
+                        <input type="number" class="form-control" name="product[shipping]" id="shipping"
+                            placeholder="In Rs" min=0 required>
+                    </div>
+                    <div class="col-md-2 mt-2">
+                        <label for="increment" class="form-label">Price increment <sup>*</sup></label>
+                        <input type="number" name="product[increment]" class="form-control" id="increment"
+                            placeholder="In Rs" min=1 required>
+                        <div class="invalid-feedback">Please enter the minimum price increment</div>
+                    </div>
+                    <div class="col-md-2 mt-2">
+                        <label for="deliver" class="form-label">Delivery days details<sup>*</sup></label>
+                        <input type="text" name="product[deliver]" id="deliver" class="form-control"
+                            placeholder="Days to deliver" required>
+                        <div class="invalid-feedback">Enter the days to deliver</div>
+                    </div>
+
+                    <div class="col-md-4 mt-2">
+                        <label for="startDate" class="form-label mb-4">Start Date and Time</label>
+                        <%# if not mentioned it will take the current date %>
+                            <input type="datetime-local" id="startDate" class="form-control" name="product[startDate]"
+                                min="<%= new Date().toISOString().slice(0,10)%>T00:00">
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <label for="endDate" class="form-label mb-4">End Date and Time<sup>*</sup></label>
+                        <input type="datetime-local" id="endDate" name="product[endDate]" class="form-control"
+                            min="<%= new Date().toISOString().slice(0,10)%>T01:00" required>
+                        <div class="invalid-feedback">Enter the time and date to end the Auction</div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <button type='submit' class="mt-2 btn btn-primary">Create new Auction</button>
+                    </div>
+                </form>
+            </div>
 
     </body>
 
-<%- include('partials/foot')%>
+    <%- include('partials/foot')%>

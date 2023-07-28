@@ -2,7 +2,7 @@ let cookies = document.cookie;
 let x = getCookie("isLoggedin");
 
 if (x == 'true') {
-    document.querySelector('#loginSignup').innerHTML = "<a class='nav-link' id = 'loginSignup' href='/userDetails'>Logged In</a>";
+    document.querySelector('#loginSignup').innerHTML = "<a class='nav-link' id = 'loginSignup' href='/user/details'>Logged In</a>";
 }
 
 function getCookie(cname) {

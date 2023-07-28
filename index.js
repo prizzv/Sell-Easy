@@ -20,6 +20,9 @@ const { isSellerLogin, requireLogin, checkSellerLogin, checkLoggedin } = require
 // Routes imports
 const authenticationRoutes = require('./routes/authentication');
 const homeRoutes = require('./routes/home');
+const productsRoutes = require('./routes/products');
+const sellerRoutes = require('./routes/seller');
+const userRoutes = require('./routes/user');
 
 //To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }))
@@ -46,77 +49,11 @@ use Date().time function which is in milliseconds to the end date
 and then subtract it with the start time to get the remaining time.
 */
 
-const validateProduct = (req, res, next) => {       //product schema validation check
-    const { error } = productSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
-
-
 app.use('/', authenticationRoutes);
 app.use('/', homeRoutes);
-
-
-//Creating a new product
-app.get('/new', isSellerLogin, (req, res) => {
-
-    res.render('new');
-})
-//Getting data from the new product 
-app.post('/product', validateProduct, wrapAsync(async (req, res) => {  // DONE: Change / route to someting else. Post of a new product
-
-    const { product } = req.body;     //getting the product details from the body 
-    const seller = await User.findById(req.session.user_id);
-
-    //converting the start Date and time 
-    let startDate = product.startDate;
-    startDate = startDate.split("T");
-    product.startTime = startDate[1];
-    product.startDate = startDate[0];
-
-    let endDate = product.endDate;
-    endDate = endDate.split("T");
-    product.endTime = endDate[1];
-    product.endDate = endDate[0];
-
-    product.seller = seller._id;
-    const newProduct = new Product(product);
-    await newProduct.save();
-
-    seller.productsOwnedList = newProduct;
-    await seller.save();
-
-    res.redirect(`/`);
-}))
-
-//Getting the product details
-app.get('/products/:id', wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    const product = await Product.findById(id)
-    res.render('product', { product })
-}))
-//Adding the value to product 
-app.post('/products/:id', requireLogin, wrapAsync(async (req, res, next) => {       //TODO: Check if I can use simple javascript to submit the form without going to post and reloading 
-    const { id } = req.params;
-
-    const product = await Product.findById(id);
-
-    product.lastBid = req.session.user_id;   // Adds the current userID to the products lastBid 
-
-    if (req.body.bid < product.increment) {  // increment price should not be less than minimum increment
-        throw new ExpressError("Ammount too low", 406);  // not acceptable  
-    }
-
-    product.price += parseInt(req.body.bid)
-    // console.log(product.price)
-
-    await product.save();
-    res.render('product', { product })
-}))
+app.use('/products',productsRoutes);
+app.use('/seller', sellerRoutes);
+app.use('/user', userRoutes);
 
 // How the system works page 
 app.get('/how_it_works', (req, res) => {
@@ -128,13 +65,6 @@ app.get('/seller_request', (req, res) => {
 
     res.render('seller_request');
 })
-
-//User details page
-app.get('/userDetails', requireLogin, checkSellerLogin, wrapAsync(async (req, res, next) => {
-    const user = await User.findById(req.session.user_id);
-
-    res.render('userDetails', { user })
-}))
 
 app.get('/secret', (req, res) => {       // FIXME: Useless delete later 
     if (!req.session.user_id) {

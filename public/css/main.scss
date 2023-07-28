@@ -133,6 +133,11 @@ body {
     .square-blocks {
         background-color: #17aac37a;
         margin: 15px;
+        color: $text-color;
+        
+        .product-name{
+            color: $text-color;
+        }
     }
 
     img {
@@ -155,7 +160,7 @@ body {
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-
+    color: $text-color;
     .time-remaining-h3 {
         font-size: 1.2em;
 
@@ -185,17 +190,20 @@ body {
     display: flex;
     flex-direction: row;
     min-height: 350px;
-    justify-content: space-between;
-
+    justify-content: center;
+    flex-wrap: wrap;
+    
     img {
-        width: 350px;
-        height: 350px;
+        width: 25%;
     }
 
     .details-div {
         background-color: $light-bg;
         border-right: 1px solid $white-border;
-
+        
+        p{
+            color: $text-color;
+        }
     }
 
     .details-div2 {
@@ -203,17 +211,20 @@ body {
         min-width: 350px;
 
         p {
+            color: $text-color;
             padding-left: .25em;
             border-bottom: 1px solid $white-border;
         }
 
         form {
+            color: $text-color;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         label {
+            color: $text-color;
             margin-left: 1em;
             margin-right: 1em;
         }
@@ -231,25 +242,26 @@ body {
     }
 
     .product-description {
-        border-bottom: 1px solid $white-border;
+        border-bottom: 1px solid $text-color;
     }
 
     h3 {
         padding: .35em;
         background-color: #1616cf;
-        border-bottom: 1px solid $white-border;
+        border-bottom: 1px solid $text-color;
     }
 
     .bid-info {
         padding: .35em;
         font-size: 1em;
         background-color: #1616cf;
-        border-bottom: 1px solid $white-border;
+        border-bottom: 1px solid $text-color;
     }
 
     .enclosed {
         display: flex;
         justify-content: flex-end;
+        margin-left: 2%;
     }
 }
 
