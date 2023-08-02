@@ -191,7 +191,7 @@
             <p>Type: </p>
             <% if(user.isSeller){ %> 
                 <p>seller</p>
-                <a href="/new">Create a new product</a>
+                <a href="/seller/newProduct">Create a new product</a>
             <% }else{ %> 
                 <p>user</p>
             <% } %> 
@@ -232,7 +232,7 @@
         <div class="userDetails-big-div">
             <div class="userDetails-top-div">
                 <p class="items">profile pic</p>
-                <button class="items" >Upload image</button>
+                <button class="items" type="file" >Upload image</button>
                 <button class="items" >Edit your details</button>
             </div>
 

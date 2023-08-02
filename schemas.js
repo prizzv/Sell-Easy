@@ -40,3 +40,11 @@ module.exports.loginSchema = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required(),
 });
+
+module.exports.bidSchema = Joi.object({
+    bid: Joi.number().required(),
+})
+
+module.exports.profile_picSchema = Joi.object({
+    profile_image: Joi.any().required(),
+})

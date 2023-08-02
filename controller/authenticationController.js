@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
+// verifies the user data and logs in the user
 const verifyUserLogin = async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -22,6 +23,7 @@ const verifyUserLogin = async (req, res, next) => {
     }
 }
 
+// creates a new user
 const createNewUser = async (req, res, next) => {
     const { user, addresses } = req.body;
 
@@ -46,4 +48,27 @@ const createNewUser = async (req, res, next) => {
     res.redirect('home');  // This gives a 302 status code 
 }
 
-module.exports = { verifyUserLogin, createNewUser };
+// changes the password of the user
+const changeUserPassword = async (req, res, next) => {
+
+    const foundUser = await User.findAndChangePassword(req.session.user_id, req.body.user.password, req.body.user.newPassword1);  // Done in user model 
+
+    if (foundUser) {
+
+        await User.updateOne({ _id: req.session.user_id }, { password: foundUser.password });
+
+    } else {
+        res.send("Password");
+    }
+
+    res.redirect('user/details');
+}
+
+// logout the user
+const logoutUser = (req, res) => {
+    // req.session.user_id = null;          // I can just remove the user_id but the below method is better 
+    req.session.destroy();
+    res.redirect('/home');
+}
+
+module.exports = { verifyUserLogin, createNewUser, changeUserPassword, logoutUser };

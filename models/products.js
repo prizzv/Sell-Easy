@@ -9,7 +9,9 @@ const productSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    imgLink: String,    //FIXME: fix the link string
+    image: {
+        type: String
+    },    //FIXME: fix the link string
     
     startDate:{
         type: String,

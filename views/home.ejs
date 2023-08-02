@@ -11,7 +11,7 @@
                 <% for(let product of products) { %>
                     <% if(product.isLive != false && product.isCompleted == false){ %> 
                         <div class="square-blocks">
-                            <a href="/products/<%= product._id %>"><img src= "<%= product.imgLink %>" > </a>
+                            <a href="/products/<%= product._id %>"><img src= "/uploads/productImages/<%= product.image %>" > </a>
                             
                             <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
                             <div class="date-price-div">
@@ -31,7 +31,7 @@
                 <% for(let product of products) { %>
                     <% if(product.isLive == false && product.isCompleted == false){ %> 
                         <div class="square-blocks">
-                            <a href="/products/<%= product._id %>"><img src= "<%= product.imgLink %>" ></a>
+                            <a href="/products/<%= product._id %>"><img src= "/uploads/productImages/<%= product.image %>" ></a>
                             <a href="/products/<%= product._id %>"> <h3 class="product-name"><%= product.name %></h3> </a>
                             <div class="date-price-div">
                                 <p >End Date: <%= product.startDate %></p>
@@ -50,7 +50,7 @@
                 <% for(let product of products) { %>
                     <% if(product.isLive == false && product.isCompleted != false){ %> 
                         <div class="square-blocks">
-                            <a href="/products/<%= product._id %>"><img src= "<%= product.imgLink %>"  ></a>
+                            <a href="/products/<%= product._id %>"><img src= "/uploads/productImages/<%= product.image %>"  ></a>
                             <a href="/products/<%= product._id %>"> <h3  class="product-name"><%= product.name %></h3> </a>
                             <div class="date-price-div">
                                 <p >End Date: <%= product.endDate %></p>

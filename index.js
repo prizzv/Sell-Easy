@@ -2,20 +2,13 @@ const express = require('express');
 const methodOverride = require('method-override')
 const app = express();
 const path = require('path');
-const Joi = require('joi');     // DONE: Do the Joi checking 
-const bcrypt = require('bcrypt');
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
 
 //Database imports
-const Product = require('./models/products');
-const User = require('./models/user');
 const connection = require('./db.js');
 
-const wrapAsync = require('./utils/wrapAsync');
 const ExpressError = require('./utils/ExpressError');
-const { productSchema, userSchema } = require('./schemas.js');
-const { isSellerLogin, requireLogin, checkSellerLogin, checkLoggedin } = require('./middleware/auth');
 
 // Routes imports
 const authenticationRoutes = require('./routes/authentication');
@@ -64,13 +57,6 @@ app.get('/how_it_works', (req, res) => {
 app.get('/seller_request', (req, res) => {
 
     res.render('seller_request');
-})
-
-app.get('/secret', (req, res) => {       // FIXME: Useless delete later 
-    if (!req.session.user_id) {
-        return res.redirect('/login')
-    }
-    res.send("HUSHHHHHHHHHHHHHH");
 })
 
 // To start the server 

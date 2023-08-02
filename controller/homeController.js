@@ -31,7 +31,7 @@ const homePage = async (req, res) => {
             }
             if (product.lastBid) {        // if someone has bid on the product last time only then do following
                 const user = await User.findById(product.lastBid);    //find the user and update the user with the product since he has won the product 
-                user.productsBought = product;
+                user.productsBought.push(product);
                 await user.save();
             }
             product.isLive = false;
