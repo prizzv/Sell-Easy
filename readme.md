@@ -1,4 +1,8 @@
+
 ## Sell-Easy
+
+![Screenshot 2024-02-25 182318](https://github.com/prizzv/Sell-Easy/assets/84437216/2cf5a3e2-c498-4d6b-8c37-a3955799f3dd)
+
 This is an auction-based e-commerce website where users can buy products on auction and sellers can post the products for auction. There are a few more features such as keeping the session maintained by using cookies. Products are differentiated by live upcomming and previous products on auction. These states are maintained dynamically.
 
 #### Getting Started
