@@ -3,3 +3,4 @@ reference
 .tmp.driveupload
 .vscode
 uploads
+.env

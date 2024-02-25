@@ -4,14 +4,18 @@ const app = express();
 const path = require('path');
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 //Database imports
 const connection = require('./db.js');
 
 const ExpressError = require('./utils/ExpressError');
 
+dotenv.config();
+
 // Routes imports
-const authenticationRoutes = require('./routes/authentication');
+const authRoutes = require('./routes/authentication');
 const homeRoutes = require('./routes/home');
 const productsRoutes = require('./routes/products');
 const sellerRoutes = require('./routes/seller');
@@ -25,6 +29,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(methodOverride('_method'))
 app.set('views', path.join(__dirname, 'views'))
+app.use(morgan('dev'));    // to log the requests
 
 app.use(session({
     secret: 'notagoodsecret',
@@ -42,7 +47,7 @@ use Date().time function which is in milliseconds to the end date
 and then subtract it with the start time to get the remaining time.
 */
 
-app.use('/', authenticationRoutes);
+app.use('/', authRoutes);
 app.use('/', homeRoutes);
 app.use('/products',productsRoutes);
 app.use('/seller', sellerRoutes);
