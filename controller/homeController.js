@@ -1,5 +1,6 @@
 const Product = require('../models/products');
 const { stringDate } = require('../utils/homeUtils');
+const User = require('../models/user');
 
 const homePage = async (req, res) => {
     const products = await Product.find({})  //find all the products
